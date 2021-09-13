@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+
+.nav {
+    display: flex;
+    background-color: #1A1A2E;
+    margin-bottom: 2.5rem;
+}
+.nav-item {
+    width: 8%;
+    padding: 1rem;
+    transition: 0.5s;
+}
+.nav-item:hover {
+    background-color: #45046A;
+    width: 10%;
+}
+.nav-link {
+    font-family: 'Bangers', cursive;
+    font-size: 1.25rem;
+    text-decoration: none;
+    color: #EEEEEE;
+    display: block;
+    text-align: center;
+    transition: 0.5s;
+}
+.nav-link:hover {
+    color:#AF0404;
+}
+
+@media (max-width:800px) {
+    .nav-item {
+        width: 25%;
+        padding: 0.8rem;
+    }
+    .nav-item:hover {
+        width: 30%;
+    }
+    .nav-link {
+        font-size: 1.2rem;
+    }
+}

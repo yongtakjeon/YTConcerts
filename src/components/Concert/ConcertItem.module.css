@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
+
+.concert-item {
+    border: 1px solid #AAAAAA;
+    width: 100px;
+    font-size: 0.7rem;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 3px 3px;
+    font-family: 'Noto Sans TC', sans-serif;
+}   
+
+.poster {
+    width: 100px;
+    height: 125px;
+}
+
+.name {
+    padding: 2px 4px;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.name:hover {
+    text-decoration: underline;
+}
+
+.artist {
+    color:royalblue;
+    padding: 2px 4px;
+    font-weight: bold;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.artist:hover {
+    text-decoration: underline;
+}
+
+.location {
+    color: lightslategrey;
+    padding: 2px 4px;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+
