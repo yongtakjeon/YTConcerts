@@ -1,5 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+
+.content {
+    margin: 3rem;
+}
+
+.section-title {
+    font-family: 'Staatliches', cursive;
+    font-size: 2.2rem;
+    color: #002366;
+}
+
 .concert-list {
-    display: flex;
-    flex-wrap: wrap;
+    /* display: flex;
+    flex-wrap: wrap; */
     margin: 15px 50px;
+}
+
+.location {
+    color: #9D0B0B;
+    font-size: 1.2em;
+}
+
+.date {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    font-weight: bold;
 }

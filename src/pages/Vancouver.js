@@ -1,12 +1,14 @@
 import Header from "../components/Header";
 import NavBar from "../components/NavBar";
+import ConcertList from "../components/Concert/ConcertList";
 
 function Vancouver() {
     return (
-        <div>
+        <>
             <Header />
             <NavBar />
-        </div>
+            <ConcertList location="Vancouver"/>
+        </>
 
     );
 };

@@ -2,7 +2,7 @@
 
 .concert-item {
     border: 1px solid #AAAAAA;
-    width: 100px;
+    /* width: 100px; */
     font-size: 0.7rem;
     padding: 5px;
     border-radius: 10px;
@@ -10,20 +10,24 @@
     font-family: 'Noto Sans TC', sans-serif;
 }   
 
-.poster {
+.image {
     width: 100px;
-    height: 125px;
+    height: 100px;
+    /* height: auto; */
+    border-radius: 50%;
 }
 
-.name {
+.concertName {
     padding: 2px 4px;
+    text-decoration: none;
+    color: black;
 
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
 }
 
-.name:hover {
+.concertName:hover {
     text-decoration: underline;
 }
 
@@ -41,7 +45,7 @@
     text-decoration: underline;
 }
 
-.location {
+.venue {
     color: lightslategrey;
     padding: 2px 4px;
 

@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Toronto from './pages/Toronto';
 import Vancouver from './pages/Vancouver';
 import Montreal from './pages/Montreal';
+import ConcertDetail from './pages/ConcertDetail';
 
 
 function App() {
@@ -27,6 +28,9 @@ function App() {
           </Route>
           <Route exact path="/montreal">
             <Montreal/>
+          </Route>
+          <Route path="/concert/:id">
+            <ConcertDetail/>
           </Route>
         </Switch>
       </Router>
