@@ -7,16 +7,16 @@ const NavBar = () => {
         <nav>
             <ul className={navStyle.nav}>
                 <li className={navStyle['nav-item']}>
-                    <Link to="/" className={navStyle['nav-link']}>All</Link>
+                    <Link to="/concerts" className={navStyle['nav-link']}>All</Link>
                 </li>
                 <li className={navStyle['nav-item']}>
-                    <Link to="/toronto" className={navStyle['nav-link']}>Toronto</Link>
+                    <Link to="/concerts?city=toronto" className={navStyle['nav-link']}>Toronto</Link>
                 </li>
                 <li className={navStyle['nav-item']}>
-                    <Link to="/vancouver" className={navStyle['nav-link']}>Vancouver</Link>
+                    <Link to="/concerts?city=vancouver" className={navStyle['nav-link']}>Vancouver</Link>
                 </li>
                 <li className={navStyle['nav-item']}>
-                    <Link to="/montreal" className={navStyle['nav-link']}>Montreal</Link>
+                    <Link to="/concerts?city=montreal" className={navStyle['nav-link']}>Montreal</Link>
                 </li>
             </ul>
         </nav>

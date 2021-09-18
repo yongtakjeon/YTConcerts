@@ -1,22 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cabin&display=swap');
+
 
 .content {
     margin: 3rem;
+
+    transition: 0.5s;
 }
 
 .section-title {
     font-family: 'Staatliches', cursive;
     font-size: 2.2rem;
     color: #002366;
+    margin-bottom: -0.5rem;
+
+    transition: 0.5s;
 }
 
 .concert-list {
-    /* display: flex;
-    flex-wrap: wrap; */
-    margin: 15px 50px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 1rem;
+
+    transition: 0.5s;
 }
 
-.location {
+.city {
     color: #9D0B0B;
     font-size: 1.2em;
 }
@@ -24,6 +35,52 @@
 .date {
     margin-top: 3rem;
     margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-family: 'Play', sans-serif;
+
+    transition: 0.5s;
+}
+
+.loading {
+    font-family: 'Cabin', sans-serif;
     font-size: 2rem;
-    font-weight: bold;
+    margin-top: 4rem;
+
+    transition: 0.5s;
+}
+.error {
+    font-family: 'Fjalla One', sans-serif;
+    color: #91091E;
+    font-size: 1.5rem;
+    margin-top: 4rem;
+
+    transition: 0.5s;
+}
+
+
+@media(max-width: 800px) {
+    .content {
+        margin: 0 1rem;
+        
+    }
+    .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 0;
+    }
+    .concert-list {
+        padding: 0;
+        align-items: center;
+    }
+    .date {
+        font-size: 1.2rem;
+        margin-top: 1.75rem;
+    }
+    .loading{
+        font-size: 1rem;
+        margin-top: 2rem;
+    }
+    .error{
+        font-size: 1rem;
+        margin-top: 2rem;
+    }
 }

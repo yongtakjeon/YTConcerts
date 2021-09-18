@@ -1,33 +1,31 @@
 import './App.css';
 import {
+  Redirect,
   BrowserRouter as Router,
   Switch,
   Route
  } from 'react-router-dom';
 
-import Home from './pages/Home';
-import Toronto from './pages/Toronto';
-import Vancouver from './pages/Vancouver';
-import Montreal from './pages/Montreal';
-import ConcertDetail from './pages/ConcertDetail';
+import ConcertDetail from './components/Concert/ConcertDetail';
+import Header from './components/Header';
+import NavBar from './components/NavBar';
+import ConcertList from './components/Concert/ConcertList';
+import Pagination from './components/UI/Pagination';
 
 
 function App() {
   return (
     <>
       <Router>
+        <Header/>
+        <NavBar/>
+
         <Switch>
           <Route exact path="/">
-            <Home/>
+            <Redirect to="/concerts"/>
           </Route>
-          <Route exact path="/toronto">
-            <Toronto/>
-          </Route>
-          <Route exact path="/vancouver">
-            <Vancouver/>
-          </Route>
-          <Route exact path="/montreal">
-            <Montreal/>
+          <Route exact path="/concerts">
+            <ConcertList/>
           </Route>
           <Route path="/concert/:id">
             <ConcertDetail/>

@@ -28,6 +28,9 @@
 }
 
 @media (max-width:800px) {
+    .nav {
+        margin-bottom: 1.5rem;
+    }
     .nav-item {
         width: 25%;
         padding: 0.8rem;

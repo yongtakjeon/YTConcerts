@@ -1,0 +1,14 @@
+.pageNum {
+    display: inline-flex;
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+    justify-content: center;
+    align-items: center;
+    margin: 0 4px;
+    cursor: pointer;
+}
+
+.pageNum.selected {
+    background-color: lightblue;
+}

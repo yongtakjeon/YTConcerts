@@ -1,24 +1,34 @@
 import concertListStyle from "./ConcertList.module.css"
 import ConcertItem from "./ConcertItem";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router";
 
 
 
-const ConcertList = (props) => {
+const ConcertList = () => {
 
   const [concerts, setConcerts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [errMsg, setErrMsg] = useState("");
+
   let concertDate = "";
   let dateChanged = false;
 
+  const query = new URLSearchParams(useLocation().search);
+  let city = query.get("city");
+
+
   function creatingAPIurl() {
-    if (props.location == "Canada") {
-      return 'https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&countryCode=CA&sort=date,name,asc&apikey=mXh7AoIGa0ug4nVAgOBHl7hfj3BHTu7J';
+
+    if (city) {
+      return `https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&city=${city}&sort=date,name,asc&apikey=mXh7AoIGa0ug4nVAgOBHl7hfj3BHTu7J`;
     }
     else {
-      return `https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&city=${props.location}&sort=date,name,asc&apikey=mXh7AoIGa0ug4nVAgOBHl7hfj3BHTu7J`;
+      return 'https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&countryCode=CA&sort=date,name,asc&apikey=mXh7AoIGa0ug4nVAgOBHl7hfj3BHTu7J';
     }
+
+
   }
 
   function concertsDataHandler() {
@@ -27,92 +37,94 @@ const ConcertList = (props) => {
 
     fetch(creatingAPIurl())
       .then((response) => {
-        // console.log(creatingAPIurl());
         return response.json();
       })
       .then((data) => {
-        console.log(data._embedded.events);
+        console.log(data);
         setConcerts(data._embedded.events);
         setIsLoading(false);
       })
       .catch((err) => {
-        console.log(err);
-        setErrMsg(`There is an error fetching data! (${err})`);
+        setErrMsg(`There is an error fetching data!😓 (${err})`);
         setIsLoading(false);
+        setIsError(true);
       });
 
   };
 
   useEffect(() => {
     concertsDataHandler();
-  }, []);
+  }, [city]);
+
+
 
 
 
   return (
 
     <div className={concertListStyle.content}>
-      <p className={concertListStyle['section-title']}>Upcoming Concerts of <span className={concertListStyle.location}>{props.location}</span></p>
+      <p className={concertListStyle['section-title']}>
+        Upcoming Concerts of <span className={concertListStyle.city}>{city ? city : "Canada"}</span>
+      </p>
+
       {
-        isLoading && <p>Loading...</p>
+        isLoading && <p className={concertListStyle.loading}>Concerts list is loading...👾</p>
       }
 
-      {
-        !isLoading && concerts.length > 0 &&
-        concerts.map((concert, index) => {
+      <div className={concertListStyle['concert-list']}>
+        {
+          !isLoading && !isError && concerts.length > 0 &&
+          concerts.map((concert, index) => {
 
-          dateChanged = false;
+            dateChanged = false;
 
-          if (concertDate != concert.dates.start.localDate) {
-            concertDate = concert.dates.start.localDate;
-            dateChanged = true;
-          }
+            if (concertDate != concert.dates.start.localDate) {
+              concertDate = concert.dates.start.localDate;
+              dateChanged = true;
+            }
 
-          return dateChanged ?
-            <div key={index}>
-              <p className={concertListStyle.date}>{concert.dates.start.localDate}</p>
+            return dateChanged ?
+              <div key={index}>
+                <p className={concertListStyle.date}>{concert.dates.start.localDate.replaceAll('-', '/')}</p>
+                <ConcertItem
+                  id={concert.id}
+                  imageURL={concert.images[0].url}
+                  concertName={concert.name}
+                  artists={concert._embedded.attractions ? concert._embedded.attractions : ""}
+                  venue={concert._embedded.venues[0]}
+                  minPrice={concert.priceRanges && concert.priceRanges[0].min}
+                  maxPrice={concert.priceRanges && concert.priceRanges[0].max}
+                  status={concert.dates.status.code}
+                />
+              </div>
+              :
               <ConcertItem
+                key={index}
                 id={concert.id}
                 imageURL={concert.images[0].url}
                 concertName={concert.name}
                 artists={concert._embedded.attractions ? concert._embedded.attractions : ""}
-                venue={concert._embedded.venues[0].name}
+                venue={concert._embedded.venues[0]}
                 minPrice={concert.priceRanges && concert.priceRanges[0].min}
                 maxPrice={concert.priceRanges && concert.priceRanges[0].max}
-              />
-            </div>
-            :
-            <ConcertItem
-              key={index}
-              id={concert.id}
-              imageURL={concert.images[0].url}
-              concertName={concert.name}
-              artists={concert._embedded.attractions ? concert._embedded.attractions : ""}
-              venue={concert._embedded.venues[0].name}
-              minPrice={concert.priceRanges && concert.priceRanges[0].min}
-              maxPrice={concert.priceRanges && concert.priceRanges[0].max}
-            />;
-          {/*// <p>{concert.name}</p>
-            // <p>{concert._embedded.attractions ?
-            //   concert._embedded.attractions[0].name : "no artist info"}
-            // </p>
-            // <p>{concert._embedded.venues[0].name}</p>
-            // <p>{concert.priceRanges ?
-            //   `Min: $${concert.priceRanges[0].min}, Max: $${concert.priceRanges[0].max}` : "no price info"}
-            // </p>
+                status={concert.dates.status.code}
+              />;
+          })
+        }
+      </div>
 
-            /* <p>{concert.dates.start.localDate} {concert.dates.start.localTime} {concert.dates.timezone}</p> */}
-
-
-        })
+      {
+        !isLoading && !isError && concerts.length === 0 &&
+        <p className={concertListStyle.error}>There is no upcoming concerts!😲</p>
       }
 
       {
-        !isLoading && concerts.length === 0 &&
-        <p>{errMsg}</p>
+        !isLoading && isError &&
+        <p className={concertListStyle.error}>{errMsg}</p>
       }
 
     </div>
+
 
 
 
