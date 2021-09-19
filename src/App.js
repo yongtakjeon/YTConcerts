@@ -19,7 +19,7 @@ function App() {
       <Router>
         <Header/>
         <NavBar/>
-
+        
         <Switch>
           <Route exact path="/">
             <Redirect to="/concerts"/>

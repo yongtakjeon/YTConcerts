@@ -1,55 +1,143 @@
-import classes from "./Pagination.module.css";
+import { Link } from "react-router-dom";
+import paginationStyle from "./Pagination.module.css";
 
 const Pagination = (props) => {
 
-    const totalElements = 309;
-    const size = 20;
+    const totalElements = props.totalElements;
+    const size = props.size;
+    const city = props.city;
+    const currentPage = props.pageNum + 1;
 
-    let currentPage = 1;
-    const totalPage = Math.ceil(totalElements / size);
+    const totalPage = Math.ceil(totalElements / size) > 50 ? 50 : Math.ceil(totalElements / size);
+
 
     /*
-    시작 숫자: current - 2 (3보다 작으면 1)
-    끝 숫자: current + 4 (총 페이지보다 크면 안됨)
+    -- pageGroup --
+    groupStart: currentPage - 2
+        -> can't be less than 1
+        -> if groupEnd is equal to totalPage, groupStart always should be 'groupEnd - 6'
+    groupEnd: currentPage + 4
+        -> can't be more than 'totalPage'
+        -> if groupStart is 1, groupEnd always should be 7
+        -> if 'totalPage' is less than 8, groupEnd = totalPage
     */
-
-    let startNum = currentPage < 3 ? 1 : (currentPage - 2);
-    console.log(startNum);
-    let endNum = currentPage > totalPage ? totalPage : currentPage + 4;
-    console.log(endNum);
-    const leftGroup = [];
-    for (let i = startNum; i <= endNum; i++) {
-        leftGroup.push(i);
+    const pageGroup = [];
+    let groupStart = currentPage - 2 < 1 ? 1 : currentPage - 2;
+    let groupEnd;
+    if (totalPage < 8) {
+        groupEnd = totalPage;
     }
-    console.log(leftGroup);
+    else {
+        if (groupStart === 1) {
+            groupEnd = 7;
+        }
+        else {
+            groupEnd = currentPage + 4 > totalPage ? totalPage : currentPage + 4;
+        }
+    }
 
-    return(
-        <div className={classes.pagination}>
+    if (groupEnd === totalPage) {
+        groupStart = groupEnd - 6 < 1 ? 1 : groupEnd - 6;
+    }
+
+    for (let i = groupStart; i <= groupEnd; i++) {
+        pageGroup.push(i);
+    }
+
+
+    return (
+        <div className={paginationStyle.pagination}>
+
             {
-                leftGroup.map((pageNum) => {
+                totalPage <= 7 &&
+                pageGroup.map((pageNum, index) => {
 
-
-                    return <span className={`${classes.pageNum} ${pageNum===currentPage? classes.selected:''}`}>{pageNum}</span>
+                    return city ?
+                        <Link to={`/concerts?city=${city}&page=${groupStart - 1 + index}`} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</Link>
+                        :
+                        <Link to={`/concerts?page=${groupStart - 1 + index}`} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</Link>
                 })
             }
-            <span>...</span>
-            <span className={classes.pageNum}>{totalPage}</span>
+
+
+            {
+                totalPage > 7 && groupStart === 1 &&
+                <div>
+                    {
+                        pageGroup.map((pageNum, index) => {
+
+                            return city ?
+                                <Link to={`/concerts?city=${city}&page=${groupStart - 1 + index}`} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</Link>
+                                :
+                                <Link to={`/concerts?page=${groupStart - 1 + index}`} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</Link>
+                        })
+                    }
+                    <span>...</span>
+                    {
+                        city ?
+                            <Link to={`/concerts?city=${city}&page=${totalPage - 1}`} className={paginationStyle.pageNum}>{totalPage}</Link>
+                            :
+                            <Link to={`/concerts?page=${totalPage - 1}`} className={paginationStyle.pageNum}>{totalPage}</Link>
+                    }
+                </div>
+            }
+
+
+            {
+                groupStart !== 1 && groupEnd !== totalPage &&
+                <div>
+                    {
+                        city ?
+                            <Link to={`/concerts?city=${city}&page=0`} className={paginationStyle.pageNum}>1</Link>
+                            :
+                            <Link to={`/concerts?page=0`} className={paginationStyle.pageNum}>1</Link>
+                    }
+                    <span>...</span>
+                    {
+                        pageGroup.map((pageNum, index) => {
+
+                            return city ?
+                                <Link to={`/concerts?city=${city}&page=${groupStart - 1 + index}`} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</Link>
+                                :
+                                <Link to={`/concerts?page=${groupStart - 1 + index}`} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</Link>
+                        })
+                    }
+                    <span>...</span>
+                    {
+                        city ?
+                            <Link to={`/concerts?city=${city}&page=${totalPage - 1}`} className={paginationStyle.pageNum}>{totalPage}</Link>
+                            :
+                            <Link to={`/concerts?page=${totalPage - 1}`} className={paginationStyle.pageNum}>{totalPage}</Link>
+                    }
+                </div>
+            }
+
+
+            {
+                groupStart !== 1 && groupEnd === totalPage &&
+                <div>
+                    {
+                        city ?
+                            <Link to={`/concerts?city=${city}&page=0`} className={paginationStyle.pageNum}>1</Link>
+                            :
+                            <Link to={`/concerts?page=0`} className={paginationStyle.pageNum}>1</Link>
+                    }
+                    <span>...</span>
+                    {
+                        pageGroup.map((pageNum, index) => {
+
+                            return city ?
+                                <Link to={`/concerts?city=${city}&page=${groupStart - 1 + index}`} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</Link>
+                                :
+                                <Link to={`/concerts?page=${groupStart - 1 + index}`} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</Link>
+                        })
+                    }
+                </div>
+            }
+
         </div>
+
     );
 };
 
 export default Pagination;
-
-// number: 0
-// size: 20
-// totalElements: 309
-// totalPages: 16
-
-/*
-
-전체갯수
-한페이지에 몇개 표시할건지
-
-현재 페이지
-
-*/
