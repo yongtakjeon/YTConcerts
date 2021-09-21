@@ -22,7 +22,7 @@ function App() {
         
         <Switch>
           <Route exact path="/">
-            <Redirect to="/concerts"/>
+            <Redirect to="/concerts?page=0"/>
           </Route>
           <Route exact path="/concerts">
             <ConcertList/>

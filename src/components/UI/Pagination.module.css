@@ -7,8 +7,12 @@
     align-items: center;
     margin: 0 4px;
     cursor: pointer;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
 }
 
 .pageNum.selected {
     background-color: lightblue;
+    /* color: goldenrod; */
 }

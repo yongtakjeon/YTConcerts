@@ -79,6 +79,8 @@ const ConcertList = () => {
       {
         !isLoading && !isError && concerts.length > 0 &&
         <div className={concertListStyle['concert-list']}>
+          <Pagination size={pageInfo.size} totalElements={pageInfo.totalElements} city={city} pageNum={parseInt(pageNum)}/>
+          
           {
             concerts.map((concert, index) => {
 

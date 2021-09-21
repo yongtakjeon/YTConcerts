@@ -14,7 +14,7 @@
     font-family: 'Staatliches', cursive;
     font-size: 2.2rem;
     color: #002366;
-    margin-bottom: -0.5rem;
+    /* margin-bottom: -0.5rem; */
 
     transition: 0.5s;
 }
@@ -44,7 +44,7 @@
 .loading {
     font-family: 'Cabin', sans-serif;
     font-size: 1.75rem;
-    margin-top: 4rem;
+    margin-top: 3rem;
 
     transition: 0.5s;
 }
@@ -52,7 +52,7 @@
     font-family: 'Fjalla One', sans-serif;
     color: #91091E;
     font-size: 1.5rem;
-    margin-top: 4rem;
+    margin-top: 2.5rem;
 
     transition: 0.5s;
 }
@@ -81,6 +81,6 @@
     }
     .error{
         font-size: 1rem;
-        margin-top: 2rem;
+        margin-top: 1.75rem;
     }
 }
