@@ -16,7 +16,7 @@ const ConcertItem = (props) => {
     if (artists) {
         for (let i = 0; i < artists.length; i++) {
 
-            i != artists.length - 1 ?
+            i !== artists.length - 1 ?
                 artistsForPrint.push({ name: artists[i].name + "‚\xa0", id: artists[i].id })
                 :
                 artistsForPrint.push({ name: artists[i].name, id: artists[i].id })
@@ -28,7 +28,7 @@ const ConcertItem = (props) => {
         <div className={itemStyle['concert-item']}>
 
             <div className={itemStyle.imageInfo} >
-                <img src={imageURL} className={itemStyle.image} />
+                <img src={imageURL} className={itemStyle.image} alt="concert"/>
             </div>
 
             <div className={itemStyle.concertMainInfo}>
@@ -48,7 +48,7 @@ const ConcertItem = (props) => {
 
             <div className={itemStyle.concertSubInfo}>
                 <div>
-                    {status == "cancelled" && <span className={itemStyle.cancelled}>{status}</span>}
+                    {status === "cancelled" && <span className={itemStyle.cancelled}>{status}</span>}
                     {/* {status == "rescheduled" && <span className={itemStyle.rescheduled}>{status}</span>} */}
                 </div>
                 <div className={itemStyle.price}>

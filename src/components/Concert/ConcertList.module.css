@@ -47,6 +47,13 @@
 
     transition: 0.5s;
 }
+.empty {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 1.5rem;
+    margin-top: 2.5rem;
+
+    transition: 0.5s;
+}
 .error {
     font-family: 'Fjalla One', sans-serif;
     color: #91091E;

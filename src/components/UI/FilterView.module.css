@@ -1,0 +1,19 @@
+.tagContainer {
+    display: flex;
+    flex-wrap:wrap;
+}
+
+.tag {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    height: 50px;
+    padding: 0 10px;
+    border-radius: 25px;
+    border: 1px solid lightgray;
+
+}
+
+.tag.selected {
+    border: 2px solid black;
+}

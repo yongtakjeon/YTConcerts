@@ -45,7 +45,7 @@
     font-size: 1.2rem;
     text-decoration: none;
     color: black;
-    padding-bottom: 0.6rem;
+    padding-bottom: 0.5rem;
 
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -57,8 +57,11 @@
 }
 
 .artists {
-    display: flex;
-    flex-wrap: wrap;
+    padding-bottom: 0.5rem;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .artist {
@@ -66,7 +69,7 @@
     color:royalblue;
     text-decoration: none;
     font-size: 0.85rem;
-    padding-bottom: 0.5rem;
+
 }
 
 .artist:hover {
@@ -137,16 +140,10 @@
         padding-bottom: 0.2rem;
     }
     .artists {
-        flex-wrap: nowrap;
-
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
+        padding-bottom: 0.2rem;
     }
     .artist {
         font-size: 0.8rem;
-        padding-bottom: 0.2rem;
-        
     }
     .venue {
         padding-bottom: 0.1rem;
@@ -160,7 +157,6 @@
     .cancelled {
         margin: 0;
         font-size: 0.7rem;
-        
     }
     .price {
         font-size: 0.7rem;

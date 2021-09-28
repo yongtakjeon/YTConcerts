@@ -9,6 +9,7 @@ function ConcertDetail() {
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
     const [errMsg, setErrMsg] = useState("");
+    let bestImg = {};
     const history = useHistory();
 
     function concertDataHandler() {
@@ -20,7 +21,6 @@ function ConcertDetail() {
                 return response.json();
             })
             .then((data) => {
-                console.log(data);
                 setConcert(data);
                 setIsLoading(false);
             })
@@ -36,6 +36,27 @@ function ConcertDetail() {
         concertDataHandler();
     }, []);
 
+
+
+    function settingBestImg() {
+        if (concert.images) {
+            let img;
+            let width = 0;
+
+            concert.images.forEach(imgObj => {
+                if (imgObj.width > width) {
+                    width = imgObj.width;
+                    img = imgObj;
+                }
+            });
+
+            bestImg = img;
+        }
+    }
+
+    settingBestImg();
+
+
     return (
         <div>
             {/* 1 */}
@@ -45,27 +66,76 @@ function ConcertDetail() {
 
 
             {/* 2 */}
-            {!isLoading && !isError &&
-            console.log(concert)}
-
-            {concert.images && <img src={concert.images[0].url} />}
-            <p>{concert.name}</p>
-
-            {/* <p>{concert._embedded.attractions}</p> */}
             {
-                concert._embedded && concert._embedded.attractions &&
-                concert._embedded.attractions.map((artist, index) => {
-                    return <p key={index}>{artist.name}</p>;
-                })
-            }
-            {concert._embedded && <p>{concert._embedded.venues[0].name}</p>}
-            {concert.dates && <p>{concert.dates.start.localDate}</p>}
-            {concert.dates && <p>{concert.dates.start.localTime} {concert.dates.timezone}</p>}
-            {/* {concert.classifications && <p>{concert.classifications[1].genre.name}/{concert.classifications[1].subGenre.name}</p>} */}
+                !isLoading && !isError &&
+                <div>
+                    {bestImg && <img src={bestImg.url} alt="Concert"/>}
+                    <Link to={`/concert/${concert.id}`}>{concert.name}</Link>
 
-            <Link to={{ pathname: concert.url }} target="_blank">
-                Buy Tickets
-            </Link>
+                    {
+                        concert.dates && concert.dates.status.code === "cancelled" &&
+                        <span>
+                            {concert.dates.status.code}!
+                        </span>
+                    }
+
+                    <div>
+                        {
+                            concert._embedded && concert._embedded.attractions &&
+                            concert._embedded.attractions.map((artist, index) => {
+                                return <Link to={`/artist/${artist.id}`} key={index}>{artist.name}, </Link>;
+                            })
+                        }
+                    </div>
+
+                    {
+                        concert._embedded &&
+                        <p>
+                            <Link to={`/venue/${concert._embedded.venues[0].id}`}>{concert._embedded.venues[0].name}</Link>
+                            , {concert._embedded.venues[0].city.name}, {concert._embedded.venues[0].state.stateCode}, {concert._embedded.venues[0].country.name}
+                        </p>
+                    }
+
+                    <div>
+                        <span>INTERESTED / </span>
+                        <span>GOING</span>
+                    </div>
+
+                    {
+                        concert.dates &&
+                        <span>
+                            Start: {concert.dates.start.localDate} {concert.dates.start.localTime} (Time zone:{concert.dates.timezone})
+                        </span>
+                    }
+                    <p>
+                        {
+                            concert.classifications &&
+                            <span>Genre: {concert.classifications[0].genre.name}</span>
+                        }
+                        {
+                            concert.classifications && concert.classifications[0].subGenre &&
+                            <span>/{concert.classifications[0].subGenre.name}</span>
+                        }
+                    </p>
+
+                    {
+                        concert.priceRanges &&
+                        <p>Price: Min: ${concert.priceRanges[0].min} / Max: ${concert.priceRanges[0].max}</p>
+                    }
+                    <Link to={{ pathname: concert.url }} target="_blank">Buy Tickets</Link>
+                    {
+                        concert.info &&
+                        <p>Info: {concert.info}</p>
+                    }
+                    {
+                        concert.pleaseNote &&
+                        <p>please Note: {concert.pleaseNote}</p>
+                    }
+
+
+
+                </div>
+            }
 
 
             {/* 3 */}

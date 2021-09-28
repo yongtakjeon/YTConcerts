@@ -1,10 +1,10 @@
 import concertListStyle from "./ConcertList.module.css"
 import ConcertItem from "./ConcertItem";
 import Pagination from "../UI/Pagination";
+import FilterView from "../UI/FilterView";
+
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
-
-
 
 
 const ConcertList = () => {
@@ -15,25 +15,39 @@ const ConcertList = () => {
   const [errMsg, setErrMsg] = useState("");
   const [pageInfo, setPageInfo] = useState({});
 
-  let concertDate = "";
-  let dateChanged = false;
-
   const query = new URLSearchParams(useLocation().search);
   let city = query.get("city");
   let pageNum = query.get("page");
+  let filterDate = query.get("localStartDateTime");
+  let filterGenre = query.get("genreId");
+
+  let concertDate = "";
+  let dateChanged = false;
 
 
   function creatingAPIurl() {
 
+    let url = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=mXh7AoIGa0ug4nVAgOBHl7hfj3BHTu7J&classificationName=music&sort=date,name,asc&page=${pageNum}`;
+
     if (city) {
-      return `https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&city=${city}&sort=date,name,asc&&page=${pageNum}&apikey=mXh7AoIGa0ug4nVAgOBHl7hfj3BHTu7J`;
+      url += `&city=${city}`;
     }
     else {
-      return `https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&countryCode=CA&sort=date,name,asc&page=${pageNum}&apikey=mXh7AoIGa0ug4nVAgOBHl7hfj3BHTu7J`;
+      url += '&countryCode=CA';
     }
 
+    if (filterDate) {
+      url += `&localStartDateTime=${filterDate}`
+    }
+
+    if (filterGenre) {
+      url += `&genreId=${filterGenre}`
+    }
+
+    return url;
 
   }
+
 
   function concertsDataHandler() {
 
@@ -46,7 +60,14 @@ const ConcertList = () => {
       .then((data) => {
         console.log(data);
         setPageInfo(data.page);
-        setConcerts(data._embedded.events);
+
+        if (data._embedded) {
+          setConcerts(data._embedded.events);
+        }
+        else {
+          setConcerts([]);
+        }
+
         setIsLoading(false);
       })
       .catch((err) => {
@@ -59,7 +80,7 @@ const ConcertList = () => {
 
   useEffect(() => {
     concertsDataHandler();
-  }, [city, pageNum]);
+  }, [city, pageNum, filterDate, filterGenre]);
 
 
 
@@ -79,14 +100,25 @@ const ConcertList = () => {
       {
         !isLoading && !isError && concerts.length > 0 &&
         <div className={concertListStyle['concert-list']}>
-          <Pagination size={pageInfo.size} totalElements={pageInfo.totalElements} city={city} pageNum={parseInt(pageNum)}/>
-          
+
+          <FilterView
+            selected={{
+              genre: filterGenre && filterGenre,
+              date: filterDate &&
+              {
+                from: filterDate.substring(0, 10),
+                to: filterDate.split(',')[1].substring(0, 10)
+              }
+            }} />
+
+          <Pagination size={pageInfo.size} totalElements={pageInfo.totalElements} city={city} pageNum={parseInt(pageNum)} />
+
           {
             concerts.map((concert, index) => {
 
               dateChanged = false;
 
-              if (concertDate != concert.dates.start.localDate) {
+              if (concertDate !== concert.dates.start.localDate) {
                 concertDate = concert.dates.start.localDate;
                 dateChanged = true;
               }
@@ -120,13 +152,24 @@ const ConcertList = () => {
             })
           }
 
-          <Pagination size={pageInfo.size} totalElements={pageInfo.totalElements} city={city} pageNum={parseInt(pageNum)}/>
+          <Pagination size={pageInfo.size} totalElements={pageInfo.totalElements} city={city} pageNum={parseInt(pageNum)} />
         </div>
       }
 
       {
         !isLoading && !isError && concerts.length === 0 &&
-        <p className={concertListStyle.error}>There is no upcoming concerts!😲</p>
+        <div>
+          <FilterView
+            selected={{
+              genre: filterGenre && filterGenre,
+              date: filterDate &&
+              {
+                from: filterDate.substring(0, 10),
+                to: filterDate.split(',')[1].substring(0, 10)
+              }
+            }} />
+          <p className={concertListStyle.empty}>There is no upcoming concerts!😲</p>
+        </div>
       }
 
       {
@@ -135,12 +178,7 @@ const ConcertList = () => {
       }
 
 
-
     </div>
-
-
-
-
 
   );
 };

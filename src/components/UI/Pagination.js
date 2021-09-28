@@ -1,7 +1,12 @@
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router";
 import paginationStyle from "./Pagination.module.css";
 
 const Pagination = (props) => {
+
+    const history = useHistory();
+    const path = useLocation().pathname;
+    const query = new URLSearchParams(useLocation().search);
 
     const totalElements = props.totalElements;
     const size = props.size;
@@ -44,14 +49,18 @@ const Pagination = (props) => {
         pageGroup.push(i);
     }
 
+    const setPageNum = ((pageNumber) => {
+        query.set('page', pageNumber);
+        history.push(path + "?" + query.toString());
+    });
 
     return (
         <div className={paginationStyle.pagination}>
             {
                 city ?
-                    <Link to={`/concerts?city=${city}&page=${currentPage-2 < 0 ? 0:currentPage-2}`} className={`${paginationStyle.pageNum} ${paginationStyle.arrow}`}>❮</Link>
+                    <span onClick={() => setPageNum(currentPage-2 < 0 ? 0:currentPage-2)} className={`${paginationStyle.pageNum} ${paginationStyle.arrow}`}>❮</span>
                     :
-                    <Link to={`/concerts?page=${currentPage-2 < 0 ? 0:currentPage-2}`} className={`${paginationStyle.pageNum} ${paginationStyle.arrow}`}>❮</Link>
+                    <span onClick={() => setPageNum(currentPage-2 < 0 ? 0:currentPage-2)} className={`${paginationStyle.pageNum} ${paginationStyle.arrow}`}>❮</span>
             }
 
             {
@@ -59,9 +68,9 @@ const Pagination = (props) => {
                 pageGroup.map((pageNum, index) => {
 
                     return city ?
-                        <Link to={`/concerts?city=${city}&page=${groupStart - 1 + index}`} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</Link>
+                        <span key={index} onClick={() => setPageNum(groupStart - 1 + index)} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</span>
                         :
-                        <Link to={`/concerts?page=${groupStart - 1 + index}`} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</Link>
+                        <span key={index} onClick={() => setPageNum(groupStart - 1 + index)} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</span>
                 })
             }
 
@@ -73,17 +82,17 @@ const Pagination = (props) => {
                         pageGroup.map((pageNum, index) => {
 
                             return city ?
-                                <Link to={`/concerts?city=${city}&page=${groupStart - 1 + index}`} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</Link>
+                                <span key={index} onClick={() => setPageNum(groupStart - 1 + index)} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</span>
                                 :
-                                <Link to={`/concerts?page=${groupStart - 1 + index}`} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</Link>
+                                <span key={index} onClick={() => setPageNum(groupStart - 1 + index)} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</span>
                         })
                     }
                     <span> ... </span>
                     {
                         city ?
-                            <Link to={`/concerts?city=${city}&page=${totalPage - 1}`} className={paginationStyle.pageNum}>{totalPage}</Link>
+                            <span onClick={() => setPageNum(totalPage - 1)} className={paginationStyle.pageNum}>{totalPage}</span>
                             :
-                            <Link to={`/concerts?page=${totalPage - 1}`} className={paginationStyle.pageNum}>{totalPage}</Link>
+                            <span onClick={() => setPageNum(totalPage - 1)} className={paginationStyle.pageNum}>{totalPage}</span>
                     }
                 </span>
             }
@@ -94,26 +103,26 @@ const Pagination = (props) => {
                 <span>
                     {
                         city ?
-                            <Link to={`/concerts?city=${city}&page=0`} className={paginationStyle.pageNum}>1</Link>
+                            <span onClick={() => setPageNum(0)} className={paginationStyle.pageNum}>1</span>
                             :
-                            <Link to={`/concerts?page=0`} className={paginationStyle.pageNum}>1</Link>
+                            <span onClick={() => setPageNum(0)} className={paginationStyle.pageNum}>1</span>
                     }
                     <span> ... </span>
                     {
                         pageGroup.map((pageNum, index) => {
 
                             return city ?
-                                <Link to={`/concerts?city=${city}&page=${groupStart - 1 + index}`} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</Link>
+                                <span key={index} onClick={() => setPageNum(groupStart - 1 + index)} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</span>
                                 :
-                                <Link to={`/concerts?page=${groupStart - 1 + index}`} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</Link>
+                                <span key={index} onClick={() => setPageNum(groupStart - 1 + index)} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</span>
                         })
                     }
                     <span> ... </span>
                     {
                         city ?
-                            <Link to={`/concerts?city=${city}&page=${totalPage - 1}`} className={paginationStyle.pageNum}>{totalPage}</Link>
+                            <span onClick={() => setPageNum(totalPage - 1)} className={paginationStyle.pageNum}>{totalPage}</span>
                             :
-                            <Link to={`/concerts?page=${totalPage - 1}`} className={paginationStyle.pageNum}>{totalPage}</Link>
+                            <span onClick={() => setPageNum(totalPage - 1)} className={paginationStyle.pageNum}>{totalPage}</span>
                     }
                 </span>
             }
@@ -124,18 +133,18 @@ const Pagination = (props) => {
                 <span>
                     {
                         city ?
-                            <Link to={`/concerts?city=${city}&page=0`} className={paginationStyle.pageNum}>1</Link>
+                            <span onClick={() => setPageNum(0)} className={paginationStyle.pageNum}>1</span>
                             :
-                            <Link to={`/concerts?page=0`} className={paginationStyle.pageNum}>1</Link>
+                            <span onClick={() => setPageNum(0)} className={paginationStyle.pageNum}>1</span>
                     }
                     <span> ... </span>
                     {
                         pageGroup.map((pageNum, index) => {
 
                             return city ?
-                                <Link to={`/concerts?city=${city}&page=${groupStart - 1 + index}`} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</Link>
+                                <span key={index} onClick={() => setPageNum(groupStart - 1 + index)} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</span>
                                 :
-                                <Link to={`/concerts?page=${groupStart - 1 + index}`} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</Link>
+                                <span key={index} onClick={() => setPageNum(groupStart - 1 + index)} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</span>
                         })
                     }
                 </span>
@@ -144,9 +153,9 @@ const Pagination = (props) => {
 
             {
                 city ?
-                    <Link to={`/concerts?city=${city}&page=${currentPage > totalPage-1 ? totalPage-1 : currentPage}`} className={`${paginationStyle.pageNum} ${paginationStyle.arrow}`}>❯</Link>
+                    <span onClick={() => setPageNum(currentPage > totalPage-1 ? totalPage-1 : currentPage)} className={`${paginationStyle.pageNum} ${paginationStyle.arrow}`}>❯</span>
                     :
-                    <Link to={`/concerts?page=${currentPage > totalPage-1 ? totalPage-1 : currentPage}`} className={`${paginationStyle.pageNum} ${paginationStyle.arrow}`}>❯</Link>
+                    <span onClick={() => setPageNum(currentPage > totalPage-1 ? totalPage-1 : currentPage)} className={`${paginationStyle.pageNum} ${paginationStyle.arrow}`}>❯</span>
             }
         </div>
 
