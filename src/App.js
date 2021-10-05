@@ -10,6 +10,9 @@ import ConcertDetail from './components/Concert/ConcertDetail';
 import Header from './components/Header';
 import NavBar from './components/NavBar';
 import ConcertList from './components/Concert/ConcertList';
+import Login from './components/Pages/Login';
+import Register from './components/Pages/Register';
+import Plans from './components/Concert/Plans';
 
 
 function App() {
@@ -28,6 +31,15 @@ function App() {
           </Route>
           <Route path="/concert/:id">
             <ConcertDetail/>
+          </Route>
+          <Route exact path="/login">
+            <Login/>
+          </Route>
+          <Route exact path="/register">
+            <Register/>
+          </Route>
+          <Route exact path="/plans">
+            <Plans />
           </Route>
         </Switch>
       </Router>
