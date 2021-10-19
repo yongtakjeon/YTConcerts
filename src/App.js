@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route
- } from 'react-router-dom';
+} from 'react-router-dom';
 
 import ConcertDetail from './components/Concert/ConcertDetail';
 import Header from './components/Header';
@@ -13,34 +13,42 @@ import ConcertList from './components/Concert/ConcertList';
 import Login from './components/Pages/Login';
 import Register from './components/Pages/Register';
 import Plans from './components/Concert/Plans';
+import { useContext } from 'react';
+import { AuthContext } from './store/auth-context';
 
 
 function App() {
+
+  const authCtx = useContext(AuthContext);
+
   return (
     <>
       <Router>
-        <Header/>
-        <NavBar/>
-        
+        <Header />
+        <NavBar />
+
         <Switch>
           <Route exact path="/">
-            <Redirect to="/concerts?page=0"/>
+            <Redirect to="/concerts?page=0" />
           </Route>
           <Route exact path="/concerts">
-            <ConcertList/>
+            <ConcertList />
           </Route>
           <Route path="/concert/:id">
-            <ConcertDetail/>
-          </Route>
-          <Route exact path="/login">
-            <Login/>
+            <ConcertDetail />
           </Route>
           <Route exact path="/register">
-            <Register/>
+            <Register />
           </Route>
+          <Route exact path="/login">
+            <Login />
+          </Route>
+
           <Route exact path="/plans">
-            <Plans />
+            {!authCtx.isLoggedIn && <Redirect to='/login' />}
+            {authCtx.isLoggedIn && <Plans />}
           </Route>
+
         </Switch>
       </Router>
     </>
