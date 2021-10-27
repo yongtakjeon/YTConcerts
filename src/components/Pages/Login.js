@@ -52,7 +52,6 @@ const Login = (() => {
                     return;
                 }
 
-
                 // save the token
                 authCtx.login(data.idToken);
                 

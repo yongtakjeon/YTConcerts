@@ -44,7 +44,7 @@ const Header = () => {
             setNickName('');
         }
 
-    });
+    }, [authCtx.isLoggedIn]);
 
 
     return (

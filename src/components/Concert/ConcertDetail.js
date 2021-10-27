@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
+import { AuthContext } from "../../store/auth-context";
 
 
 function ConcertDetail() {
@@ -9,9 +10,16 @@ function ConcertDetail() {
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
     const [errMsg, setErrMsg] = useState("");
-    let bestImg = {};
+    const [bestImg, setBestImg] = useState(null);
     const history = useHistory();
 
+    // for saving the concert to the Plans
+    const authCtx = useContext(AuthContext);
+    const [userId, setUserId] = useState('');
+
+
+
+    
     function concertDataHandler() {
 
         setIsLoading(true);
@@ -30,13 +38,7 @@ function ConcertDetail() {
                 setIsError(true);
             });
 
-    }
-
-    useEffect(() => {
-        concertDataHandler();
-    }, []);
-
-
+    };
 
     function settingBestImg() {
         if (concert.images) {
@@ -50,11 +52,54 @@ function ConcertDetail() {
                 }
             });
 
-            bestImg = img;
+            setBestImg(img);
         }
-    }
+    };
 
-    settingBestImg();
+    function getUserId() {
+
+        if (authCtx.isLoggedIn) {
+
+            fetch('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDTPHN12nrc4XXAV_nxW4F97LKiRK-LZ14', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    idToken: authCtx.token
+                })
+            })
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+
+                    setUserId(data.users[0].localId);
+
+                });
+        }
+        else {
+            setUserId(null);
+        }
+    };
+
+
+
+
+
+    useEffect(() => {
+        concertDataHandler();
+    }, []);
+
+    useEffect(() => {
+        settingBestImg();
+    }, [concert]);
+
+    useEffect(() => {
+        getUserId();
+    }, [authCtx.isLoggedIn])
+
+
 
 
     return (
@@ -69,7 +114,7 @@ function ConcertDetail() {
             {
                 !isLoading && !isError &&
                 <div>
-                    {bestImg && <img src={bestImg.url} alt="Concert"/>}
+                    {bestImg && <img src={bestImg.url} alt="Concert" />}
                     <Link to={`/concert/${concert.id}`}>{concert.name}</Link>
 
                     {
@@ -96,10 +141,27 @@ function ConcertDetail() {
                         </p>
                     }
 
-                    <div>
-                        <span>INTERESTED / </span>
-                        <span>GOING</span>
-                    </div>
+
+                    {
+                        authCtx.isLoggedIn &&
+                        <form action={`http://localhost:8080/api/users/${userId}/plans`} method="POST">
+                            <input type="hidden" name="concertId" value={`${id}`}/>
+
+                            <button type="submit">
+                                Save to Plans
+                            </button>
+                        </form>
+                    }
+
+                    {
+                        !authCtx.isLoggedIn &&
+                        <div>
+                            <button onClick={() => { history.push('/login'); }}>
+                                Save to Plans
+                            </button>
+                        </div>
+                    }
+
 
                     {
                         concert.dates &&
@@ -143,6 +205,7 @@ function ConcertDetail() {
                 !isLoading && isError &&
                 <p>{errMsg}</p>
             }
+
 
             <button onClick={() => { history.goBack() }}>back</button>
 

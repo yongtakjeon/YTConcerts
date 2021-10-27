@@ -33,6 +33,18 @@ const ConcertItem = (props) => {
 
             <div className={itemStyle.concertMainInfo}>
                 <Link to={`concert/${id}`} className={itemStyle.concertName}>{concertName}</Link>
+
+                {/* {
+                    artists.length > 0 &&
+                    <div className={itemStyle.artists}>
+                        {
+                            artists.map((artist, index) => {
+                                return <Link to={`/artist/${artist.id}`} key={index} className={itemStyle.artist}>{artist.name}</Link>;
+                            }).join(', ')
+
+                        }
+                    </div>
+                } */}
                 {artistsForPrint.length > 0 &&
                     <div className={itemStyle.artists}>
                         {

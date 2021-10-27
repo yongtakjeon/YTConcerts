@@ -13,6 +13,7 @@ const PlanItem = (props) => {
     const minPrice = props.minPrice;
     const maxPrice = props.maxPrice;
     const status = props.status;
+    const concertURL = props.concertURL;
 
     if (artists) {
         for (let i = 0; i < artists.length; i++) {
@@ -25,6 +26,9 @@ const PlanItem = (props) => {
     }
     // END
 
+    const deletePlan = () => {
+
+    };
 
 
     return (
@@ -78,9 +82,12 @@ const PlanItem = (props) => {
 
 
             <div className={planItemStyle['plan-options']}>
-                <button>BUY TICKETS  </button>
-                <button>INTERESTED  </button>
-                <button>GOING</button>
+            <Link to={{ pathname: concertURL }} target="_blank">
+                <button>
+                    BUY TICKETS
+                </button>
+                </Link>
+                <button onClick={deletePlan}>DELETE</button>
             </div>
 
 
