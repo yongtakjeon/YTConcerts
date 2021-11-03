@@ -1,37 +1,47 @@
 import { createContext, useState } from 'react';
 
 export const AuthContext = createContext({
-    token: "",
+    userId: '',
+    nickname: '',
     isLoggedIn: false,
     login: (token) => { },
     logout: () => { }
 });
 
 const AuthContextProvider = (props) => {
-    
-    const initialToken = sessionStorage.getItem('token');
 
-    const [token, setToken] = useState(initialToken);
-    const userIsLoggedIn = !!token;
+    const initialUserId = sessionStorage.getItem('userId');
+    const initialNickname = sessionStorage.getItem('nickname');
 
-    const loginHandler = (token) => {
-        setToken(token);
-        sessionStorage.setItem('token', token);
+    const [userId, setUserId] = useState(initialUserId);
+    const [nickname, setNickname] = useState(initialNickname);
+
+    const userIsLoggedIn = !!userId;
+
+    const loginHandler = (userId, nickname) => {
+        setUserId(userId);
+        setNickname(nickname);
+
+        sessionStorage.setItem('userId', userId);
+        sessionStorage.setItem('nickname', nickname);
     };
 
     const logoutHandler = () => {
-        setToken(null);
-        sessionStorage.removeItem('token');
+        setUserId(null);
+        setNickname(null);
+
+        sessionStorage.removeItem('userId');
+        sessionStorage.removeItem('nickname');
     };
-    
+
 
     const contextValue = {
-        token: token,
+        userId: userId,
+        nickname: nickname,
         isLoggedIn: userIsLoggedIn,
         login: loginHandler,
         logout: logoutHandler
     };
-
 
     return <AuthContext.Provider value={contextValue}>{props.children}</AuthContext.Provider>;
 };

@@ -15,11 +15,8 @@ function ConcertDetail() {
 
     // for saving the concert to the Plans
     const authCtx = useContext(AuthContext);
-    const [userId, setUserId] = useState('');
 
 
-
-    
     function concertDataHandler() {
 
         setIsLoading(true);
@@ -56,50 +53,43 @@ function ConcertDetail() {
         }
     };
 
-    function getUserId() {
+    const addPlanHandler = (event) => {
 
-        if (authCtx.isLoggedIn) {
+        event.preventDefault();
 
-            fetch('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDTPHN12nrc4XXAV_nxW4F97LKiRK-LZ14', {
+        fetch(`https://ytconcerts-server.herokuapp.com/api/users/${authCtx.userId}/plans`,
+            {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    idToken: authCtx.token
+                    concertId: id
                 })
             })
-                .then((response) => {
-                    return response.json();
-                })
-                .then((data) => {
+            .then((response) => {
+                return response.json()
+            })
+            .then((data) => {
+                if (data.error) {
+                    alert(data.error.message);
+                }
+                else {
+                    alert("The concert is successfully added to the plans!");
+                }
+            })
 
-                    setUserId(data.users[0].localId);
-
-                });
-        }
-        else {
-            setUserId(null);
-        }
     };
-
-
-
 
 
     useEffect(() => {
         concertDataHandler();
     }, []);
 
+    // to execute settingBestImg() AFTER setConcert(data)
     useEffect(() => {
         settingBestImg();
     }, [concert]);
-
-    useEffect(() => {
-        getUserId();
-    }, [authCtx.isLoggedIn])
-
-
 
 
     return (
@@ -141,18 +131,14 @@ function ConcertDetail() {
                         </p>
                     }
 
-
                     {
                         authCtx.isLoggedIn &&
-                        <form action={`http://localhost:8080/api/users/${userId}/plans`} method="POST">
-                            <input type="hidden" name="concertId" value={`${id}`}/>
-
+                        <form onSubmit={addPlanHandler}>
                             <button type="submit">
                                 Save to Plans
                             </button>
                         </form>
                     }
-
                     {
                         !authCtx.isLoggedIn &&
                         <div>
@@ -161,7 +147,6 @@ function ConcertDetail() {
                             </button>
                         </div>
                     }
-
 
                     {
                         concert.dates &&
@@ -193,8 +178,6 @@ function ConcertDetail() {
                         concert.pleaseNote &&
                         <p>please Note: {concert.pleaseNote}</p>
                     }
-
-
 
                 </div>
             }

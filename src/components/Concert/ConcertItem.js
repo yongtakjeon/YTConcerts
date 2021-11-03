@@ -1,5 +1,5 @@
 import itemStyle from './ConcertItem.module.css';
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 const ConcertItem = (props) => {
 
@@ -7,51 +7,36 @@ const ConcertItem = (props) => {
     const imageURL = props.imageURL;
     const concertName = props.concertName;
     const artists = props.artists;
-    let artistsForPrint = [];
     const venue = props.venue;
     const minPrice = props.minPrice;
     const maxPrice = props.maxPrice;
     const status = props.status;
 
-    if (artists) {
-        for (let i = 0; i < artists.length; i++) {
-
-            i !== artists.length - 1 ?
-                artistsForPrint.push({ name: artists[i].name + "‚\xa0", id: artists[i].id })
-                :
-                artistsForPrint.push({ name: artists[i].name, id: artists[i].id })
-        }
-    }
 
     return (
 
         <div className={itemStyle['concert-item']}>
 
             <div className={itemStyle.imageInfo} >
-                <img src={imageURL} className={itemStyle.image} alt="concert"/>
+                <img src={imageURL} className={itemStyle.image} alt="concert" />
             </div>
 
             <div className={itemStyle.concertMainInfo}>
                 <Link to={`concert/${id}`} className={itemStyle.concertName}>{concertName}</Link>
 
-                {/* {
+                {
                     artists.length > 0 &&
                     <div className={itemStyle.artists}>
                         {
                             artists.map((artist, index) => {
-                                return <Link to={`/artist/${artist.id}`} key={index} className={itemStyle.artist}>{artist.name}</Link>;
-                            }).join(', ')
+                                return (
+                                    <span key={index}>
+                                        <Link to={`/artist/${artist.id}`} className={itemStyle.artist}>{artist.name}</Link>
+                                        {index !== artists.length - 1 && <span className={itemStyle.comma}>, </span>}
+                                    </span>
 
-                        }
-                    </div>
-                } */}
-                {artistsForPrint.length > 0 &&
-                    <div className={itemStyle.artists}>
-                        {
-                            artistsForPrint.map((artist, index) => {
-                                return <Link to={`/artist/${artist.id}`} key={index} className={itemStyle.artist}>{artist.name}</Link>;
+                                );
                             })
-
                         }
                     </div>
                 }

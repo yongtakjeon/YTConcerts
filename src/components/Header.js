@@ -5,47 +5,7 @@ import headerStyle from './Header.module.css'
 
 const Header = () => {
 
-
     const authCtx = useContext(AuthContext);
-    const [nickName, setNickName] = useState('');
-
-    const getNickName = () => {
-
-        fetch('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDTPHN12nrc4XXAV_nxW4F97LKiRK-LZ14', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                idToken: authCtx.token
-            })
-        })
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-
-                console.log(data);
-
-                setNickName(data.users[0].displayName);
-
-            });
-
-    };
-
-
-
-    useEffect(() => {
-
-        if (authCtx.isLoggedIn) {
-            getNickName();
-        }
-        else {
-            setNickName('');
-        }
-
-    }, [authCtx.isLoggedIn]);
-
 
     return (
         <div className={headerStyle.header}>
@@ -63,12 +23,11 @@ const Header = () => {
                     </Link>
                 </div>
             }
-
             {
                 authCtx.isLoggedIn &&
                 <div className={headerStyle.beforeLogin}>
 
-                    <span className={headerStyle.nickName}> {nickName} </span>
+                    <span className={headerStyle.nickName}> {authCtx.nickname} </span>
 
                     <Link to="/plans">
                         <button className={headerStyle.buttons}>Plans</button>
@@ -77,9 +36,7 @@ const Header = () => {
                     <button className={headerStyle.buttons} onClick={authCtx.logout}>Log Out</button>
                 </div>
             }
-
         </div>
     );
 };
-
 export default Header;

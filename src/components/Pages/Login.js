@@ -8,10 +8,8 @@ const Login = (() => {
 
     const authCtx = useContext(AuthContext);
     const history = useHistory();
-
     const emailRef = useRef();
     const passwordRef = useRef();
-
     const [isLoading, setIsLoading] = useState(false);
 
 
@@ -19,12 +17,11 @@ const Login = (() => {
 
         event.preventDefault();
 
-  
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
 
         setIsLoading(true);
-  
+
 
         //call API
         fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDTPHN12nrc4XXAV_nxW4F97LKiRK-LZ14', {
@@ -44,35 +41,33 @@ const Login = (() => {
 
                 setIsLoading(false);
 
-                // console.log(data);
-
                 // if there is an error
                 if (data.error) {
                     alert(data.error.message);
                     return;
                 }
 
-                // save the token
-                authCtx.login(data.idToken);
-                
+                // save the userId, nickname
+                authCtx.login(data.localId, data.displayName);
+
                 // redirect to the home page
                 history.push('/');
 
             })
+            .catch(err => {
+                console.log(err);
+            });
 
-
-            
     };
 
     return (
-
         <form onSubmit={submitHandler}>
             <h2>Log In</h2>
 
-            <input type="email" placeholder="Email" name="email" required autoFocus ref={emailRef}/>
-            <br/>
-            <input type="password" placeholder="Password" name="password" required ref={passwordRef}/>
-            <br/>
+            <input type="email" placeholder="Email" name="email" required autoFocus ref={emailRef} />
+            <br />
+            <input type="password" placeholder="Password" name="password" required ref={passwordRef} />
+            <br />
 
             {
                 !isLoading &&
@@ -81,7 +76,6 @@ const Login = (() => {
                 </button>
 
             }
-
             {
                 isLoading &&
                 <button disabled>
@@ -89,15 +83,10 @@ const Login = (() => {
                 </button>
             }
 
-
             <Link to="/register">
                 <button>Register</button>
             </Link>
-            
-
         </form>
     );
-
 });
-
 export default Login;

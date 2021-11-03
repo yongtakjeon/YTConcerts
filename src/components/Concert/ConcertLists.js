@@ -1,4 +1,4 @@
-import concertListStyle from "./ConcertList.module.css"
+import concertListStyle from "./ConcertLists.module.css"
 import ConcertItem from "./ConcertItem";
 import Pagination from "../UI/Pagination";
 import FilterView from "../UI/FilterView";
@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 
 
-const ConcertList = () => {
+const ConcertLists = () => {
 
   const [concerts, setConcerts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -46,8 +46,7 @@ const ConcertList = () => {
 
     return url;
 
-  }
-
+  };
 
   function concertsDataHandler() {
 
@@ -58,7 +57,7 @@ const ConcertList = () => {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setPageInfo(data.page);
 
         if (data._embedded) {
@@ -83,9 +82,6 @@ const ConcertList = () => {
   }, [city, pageNum, filterDate, filterGenre]);
 
 
-
-
-
   return (
 
     <div className={concertListStyle.content}>
@@ -93,10 +89,13 @@ const ConcertList = () => {
         Upcoming Concerts of <span className={concertListStyle.city}>{city ? city : "Canada"}</span>
       </p>
 
+      {/* === 1 === */}
       {
         isLoading && <p className={concertListStyle.loading}>Concerts list is loading...👾</p>
       }
 
+
+      {/* === 2 === */}
       {
         !isLoading && !isError && concerts.length > 0 &&
         <div className={concertListStyle['concert-list']}>
@@ -119,27 +118,13 @@ const ConcertList = () => {
               dateChanged = false;
 
               if (concertDate !== concert.dates.start.localDate) {
-                concertDate = concert.dates.start.localDate;
                 dateChanged = true;
+                concertDate = concert.dates.start.localDate;
               }
 
-              return dateChanged ?
-                <div key={index}>
-                  <p className={concertListStyle.date}>{concert.dates.start.localDate.replaceAll('-', '/')}</p>
-                  <ConcertItem
-                    id={concert.id}
-                    imageURL={concert.images[0].url}
-                    concertName={concert.name}
-                    artists={concert._embedded.attractions ? concert._embedded.attractions : ""}
-                    venue={concert._embedded.venues[0]}
-                    minPrice={concert.priceRanges && concert.priceRanges[0].min}
-                    maxPrice={concert.priceRanges && concert.priceRanges[0].max}
-                    status={concert.dates.status.code}
-                  />
-                </div>
-                :
+              return <div key={index}>
+                {dateChanged && <p className={concertListStyle.date}>{concert.dates.start.localDate.replaceAll('-', '/')}</p>}
                 <ConcertItem
-                  key={index}
                   id={concert.id}
                   imageURL={concert.images[0].url}
                   concertName={concert.name}
@@ -148,7 +133,8 @@ const ConcertList = () => {
                   minPrice={concert.priceRanges && concert.priceRanges[0].min}
                   maxPrice={concert.priceRanges && concert.priceRanges[0].max}
                   status={concert.dates.status.code}
-                />;
+                />
+              </div>;
             })
           }
 
@@ -156,6 +142,8 @@ const ConcertList = () => {
         </div>
       }
 
+
+      {/* === 3 === */}
       {
         !isLoading && !isError && concerts.length === 0 &&
         <div>
@@ -172,15 +160,16 @@ const ConcertList = () => {
         </div>
       }
 
+
+      {/* === 4 === */}
       {
         !isLoading && isError &&
         <p className={concertListStyle.error}>{errMsg}</p>
       }
-
 
     </div>
 
   );
 };
 
-export default ConcertList;
+export default ConcertLists;
