@@ -31,7 +31,7 @@ const ConcertItem = (props) => {
                             artists.map((artist, index) => {
                                 return (
                                     <span key={index}>
-                                        <Link to={`/artist/${artist.id}`} className={itemStyle.artist}>{artist.name}</Link>
+                                        <Link to={{ pathname: artist.url }} target="_blank" className={itemStyle.artist}>{artist.name}</Link>
                                         {index !== artists.length - 1 && <span className={itemStyle.comma}>, </span>}
                                     </span>
 
@@ -40,7 +40,7 @@ const ConcertItem = (props) => {
                         }
                     </div>
                 }
-                <Link to={`/venue/${venue.id}`} className={itemStyle.venue}>{venue.name}</Link>
+                <Link to={{ pathname: venue.url }} target="_blank" className={itemStyle.venue}>{venue.name}</Link>
             </div>
 
             <div className={itemStyle.concertSubInfo}>

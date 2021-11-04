@@ -1,3 +1,4 @@
+import concertDetailStyle from "./ConcertDetail.module.css";
 import { useContext, useEffect, useState } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { AuthContext } from "../../store/auth-context";
@@ -78,6 +79,9 @@ function ConcertDetail() {
                     alert("The concert is successfully added to the plans!");
                 }
             })
+            .catch(err => {
+                console.log(err);
+            });
 
     };
 
@@ -117,16 +121,26 @@ function ConcertDetail() {
                     <div>
                         {
                             concert._embedded && concert._embedded.attractions &&
-                            concert._embedded.attractions.map((artist, index) => {
-                                return <Link to={`/artist/${artist.id}`} key={index}>{artist.name}, </Link>;
-                            })
+                            <div className={concertDetailStyle.artists}>
+                                {
+                                    concert._embedded.attractions.map((artist, index) => {
+                                        return (
+                                            <span key={index}>
+                                                <Link to={{ pathname: artist.url }} target="_blank" className={concertDetailStyle.artist}>{artist.name}</Link>
+                                                {index !== concert._embedded.attractions.length - 1 && <span className={concertDetailStyle.comma}>, </span>}
+                                            </span>
+
+                                        );
+                                    })
+                                }
+                            </div>
                         }
                     </div>
 
                     {
                         concert._embedded &&
                         <p>
-                            <Link to={`/venue/${concert._embedded.venues[0].id}`}>{concert._embedded.venues[0].name}</Link>
+                            <Link to={{ pathname: concert._embedded.venues[0].url }} target="_blank" className={concertDetailStyle.venue}>{concert._embedded.venues[0].name}</Link>
                             , {concert._embedded.venues[0].city.name}, {concert._embedded.venues[0].state.stateCode}, {concert._embedded.venues[0].country.name}
                         </p>
                     }
