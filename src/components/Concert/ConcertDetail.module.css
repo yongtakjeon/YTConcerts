@@ -1,0 +1,152 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Acme&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Hind+Siliguri&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+
+.concert-detail {
+  width: 80%;
+  margin: 0 auto;
+}
+.mainContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  margin-bottom: 3rem;
+}
+.concertName {
+  font-family: "Rubik", sans-serif;
+  font-size: 2.2rem;
+
+  margin-bottom: 1.25rem;
+}
+.cancelled {
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.9rem;
+  background-color: crimson;
+  color: white;
+  padding: 0.25em 1em;
+  border-radius: 15px;
+  margin-left: 0.8em;
+}
+.artists {
+  margin-bottom: 0.75rem;
+}
+.artist {
+  text-decoration: none;
+  font-size: 1.25rem;
+  color: #22577a;
+  font-family: "Exo 2", sans-serif;
+}
+.artist:hover {
+  text-decoration: underline;
+}
+.comma {
+  font-size: 1.25rem;
+  color: #22577a;
+  font-family: "Exo 2", sans-serif;
+}
+.venue {
+  display: block;
+  font-size: 1rem;
+  color: #7e7474;
+  font-family: "Zen Maru Gothic", sans-serif;
+  text-decoration: none;
+  font-style: italic;
+
+  margin-bottom: 1.5rem;
+}
+.venue:hover {
+  text-decoration: underline;
+}
+form {
+  display: inline-block;
+}
+.button {
+  border: 0;
+  border-radius: 56px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Acme", sans-serif;
+  font-size: 1.25rem;
+  outline: 0;
+  padding: 16px 21px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin-right: 0.5rem;
+}
+.button:before {
+  background-color: initial;
+  background-image: linear-gradient(#fff 0, rgba(255, 255, 255, 0) 100%);
+  border-radius: 125px;
+  content: "";
+  height: 50%;
+  left: 4%;
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  transition: all 0.3s;
+  width: 92%;
+}
+.button:hover {
+  box-shadow: rgba(255, 255, 255, 0.2) 0 3px 15px inset,
+    rgba(0, 0, 0, 0.1) 0 3px 5px, rgba(0, 0, 0, 0.1) 0 10px 13px;
+  transform: scale(1.05);
+}
+.blueButton {
+  background-color: #005086;
+}
+.greenButton {
+  background-color: #00917c;
+}
+.image {
+  width: 40%;
+  margin-left: 1rem;
+  border-radius: 10px;
+}
+
+.subContent {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+.contentLists {
+  margin-bottom: 1rem;
+}
+.title {
+  font-weight: bold;
+  font-family: "Ubuntu", sans-serif;
+  color: #362222;
+}
+.content {
+  font-family: "Hind Siliguri", sans-serif;
+}
+
+.goBackButton {
+  display: inline-block;
+  padding: 0.35em 1.2em;
+  margin-bottom: 2rem;
+  border-radius: 5px;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Bebas Neue", cursive;
+  color: #ffffff;
+  text-align: center;
+  transition: all 0.2s;
+  background-color: black;
+  cursor: pointer;
+  font-size: 1.25rem;
+}
+.goBackButton:hover {
+  color: #000000;
+  background-color: #ffffff;
+  border: 0.1em solid;
+}

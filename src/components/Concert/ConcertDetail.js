@@ -97,7 +97,8 @@ function ConcertDetail() {
 
 
     return (
-        <div>
+        <div className={concertDetailStyle['concert-detail']}>
+
             {/* 1 */}
             {
                 isLoading && <p>Loading...</p>
@@ -108,92 +109,111 @@ function ConcertDetail() {
             {
                 !isLoading && !isError &&
                 <div>
-                    {bestImg && <img src={bestImg.url} alt="Concert" />}
-                    <Link to={`/concert/${concert.id}`}>{concert.name}</Link>
 
-                    {
-                        concert.dates && concert.dates.status.code === "cancelled" &&
-                        <span>
-                            {concert.dates.status.code}!
-                        </span>
-                    }
-
-                    <div>
-                        {
-                            concert._embedded && concert._embedded.attractions &&
-                            <div className={concertDetailStyle.artists}>
+                    <div className={concertDetailStyle.mainContent}>
+                        <div>
+                            <p className={concertDetailStyle.concertName}>
+                                <span>{concert.name}</span>
                                 {
-                                    concert._embedded.attractions.map((artist, index) => {
-                                        return (
-                                            <span key={index}>
-                                                <Link to={{ pathname: artist.url }} target="_blank" className={concertDetailStyle.artist}>{artist.name}</Link>
-                                                {index !== concert._embedded.attractions.length - 1 && <span className={concertDetailStyle.comma}>, </span>}
-                                            </span>
+                                    concert.dates && concert.dates.status.code === "cancelled" &&
+                                    <span className={concertDetailStyle.cancelled}>{concert.dates.status.code}</span>
+                                }
+                            </p>
 
-                                        );
-                                    })
+                            <div>
+                                {
+                                    concert._embedded && concert._embedded.attractions &&
+                                    <div className={concertDetailStyle.artists}>
+                                        {
+                                            concert._embedded.attractions.map((artist, index) => {
+                                                return (
+                                                    <span key={index}>
+                                                        <Link to={{ pathname: artist.url }} target="_blank" className={concertDetailStyle.artist}>{artist.name}</Link>
+                                                        {index !== concert._embedded.attractions.length - 1 && <span className={concertDetailStyle.comma}>, </span>}
+                                                    </span>
+
+                                                );
+                                            })
+                                        }
+                                    </div>
                                 }
                             </div>
-                        }
+
+                            {
+                                concert._embedded &&
+                                <Link to={{ pathname: concert._embedded.venues[0].url }} target="_blank" className={concertDetailStyle.venue}>{concert._embedded.venues[0].name}, {concert._embedded.venues[0].city.name}, {concert._embedded.venues[0].state.stateCode}, {concert._embedded.venues[0].country.name}</Link>
+                            }
+                            <Link to={{ pathname: concert.url }} target="_blank">
+                                <button className={`${concertDetailStyle.button} ${concertDetailStyle.blueButton}`}>Buy Tickets</button>
+                            </Link>
+                            {
+                                authCtx.isLoggedIn &&
+                                <form onSubmit={addPlanHandler}>
+                                    <button type="submit" className={`${concertDetailStyle.button} ${concertDetailStyle.greenButton}`}>
+                                        Save to Plans
+                                    </button>
+                                </form>
+                            }
+                            {
+                                !authCtx.isLoggedIn &&
+                                <span>
+                                    <button onClick={() => { history.push('/login'); }} className={`${concertDetailStyle.button} ${concertDetailStyle.greenButton}`}>
+                                        Save to Plans
+                                    </button>
+                                </span>
+                            }
+                        </div>
+                        {bestImg && <img src={bestImg.url} alt="Concert" className={concertDetailStyle.image} />}
                     </div>
 
-                    {
-                        concert._embedded &&
-                        <p>
-                            <Link to={{ pathname: concert._embedded.venues[0].url }} target="_blank" className={concertDetailStyle.venue}>{concert._embedded.venues[0].name}</Link>
-                            , {concert._embedded.venues[0].city.name}, {concert._embedded.venues[0].state.stateCode}, {concert._embedded.venues[0].country.name}
+
+                    <div className={concertDetailStyle.subContent}>
+                        {
+                            concert.dates &&
+                            <p className={concertDetailStyle.contentLists}>
+                                <span className={concertDetailStyle.title}>Start: </span>
+                                <span className={concertDetailStyle.content}>{concert.dates.start.localDate} at {concert.dates.start.localTime.substring(0, 5)} (Time zone: {concert.dates.timezone})</span>
+                            </p>
+                        }
+                        <p className={concertDetailStyle.contentLists}>
+                            {
+                                concert.classifications &&
+                                <span>
+                                    <span className={concertDetailStyle.title}>Genre: </span>
+                                    <span className={concertDetailStyle.content}>{concert.classifications[0].genre.name}</span>
+                                </span>
+                            }
+                            {
+                                concert.classifications && concert.classifications[0].subGenre &&
+                                <span className={concertDetailStyle.content}>/{concert.classifications[0].subGenre.name}</span>
+                            }
                         </p>
-                    }
 
-                    {
-                        authCtx.isLoggedIn &&
-                        <form onSubmit={addPlanHandler}>
-                            <button type="submit">
-                                Save to Plans
-                            </button>
-                        </form>
-                    }
-                    {
-                        !authCtx.isLoggedIn &&
-                        <div>
-                            <button onClick={() => { history.push('/login'); }}>
-                                Save to Plans
-                            </button>
-                        </div>
-                    }
-
-                    {
-                        concert.dates &&
-                        <span>
-                            Start: {concert.dates.start.localDate} {concert.dates.start.localTime} (Time zone:{concert.dates.timezone})
-                        </span>
-                    }
-                    <p>
                         {
-                            concert.classifications &&
-                            <span>Genre: {concert.classifications[0].genre.name}</span>
+                            concert.priceRanges &&
+                            <p className={concertDetailStyle.contentLists}>
+                                <span className={concertDetailStyle.title}>Price: </span>
+                                <span className={concertDetailStyle.content}>Min: ${concert.priceRanges[0].min} / Max: ${concert.priceRanges[0].max}</span>
+                            </p>
+                        }
+
+                        {
+                            concert.info &&
+                            <p className={concertDetailStyle.contentLists}>
+                                <span className={concertDetailStyle.title}>Info: </span>
+                                <span className={concertDetailStyle.content}>{concert.info}</span>
+                            </p>
                         }
                         {
-                            concert.classifications && concert.classifications[0].subGenre &&
-                            <span>/{concert.classifications[0].subGenre.name}</span>
+                            concert.pleaseNote &&
+                            <p className={concertDetailStyle.contentLists}>
+                                <span className={concertDetailStyle.title}>please Note: </span>
+                                <span className={concertDetailStyle.content}>{concert.pleaseNote}</span>
+                            </p>
                         }
-                    </p>
-
-                    {
-                        concert.priceRanges &&
-                        <p>Price: Min: ${concert.priceRanges[0].min} / Max: ${concert.priceRanges[0].max}</p>
-                    }
-                    <Link to={{ pathname: concert.url }} target="_blank">Buy Tickets</Link>
-                    {
-                        concert.info &&
-                        <p>Info: {concert.info}</p>
-                    }
-                    {
-                        concert.pleaseNote &&
-                        <p>please Note: {concert.pleaseNote}</p>
-                    }
-
+                    </div>
                 </div>
+
             }
 
 
@@ -204,7 +224,7 @@ function ConcertDetail() {
             }
 
 
-            <button onClick={() => { history.goBack() }}>back</button>
+            <button onClick={() => { history.goBack() }} className={concertDetailStyle.goBackButton}>back</button>
 
         </div>
     );

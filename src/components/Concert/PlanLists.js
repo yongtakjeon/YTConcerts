@@ -42,6 +42,7 @@ const PlanLists = () => {
                 });
 
                 setConcertIds(concertIds);
+                // console.log(concertIds);
 
 
                 // 2. get concerts' details (using Ticketmaster API)
@@ -51,16 +52,21 @@ const PlanLists = () => {
 
                 for (let i = 0; i < concertIds.length; i++) {
 
-                    response = await fetch(`https://app.ticketmaster.com/discovery/v2/events/${concertIds[i]}?apikey=mXh7AoIGa0ug4nVAgOBHl7hfj3BHTu7J`);
+                    try {
+                        response = await fetch(`https://app.ticketmaster.com/discovery/v2/events/${concertIds[i]}?apikey=mXh7AoIGa0ug4nVAgOBHl7hfj3BHTu7J`);
 
-                    data = await response.json();
+                        data = await response.json();
 
-                    concerts.push(data);
+                        concerts.push(data);
+                    }
+                    catch (err) {
+                        // deletePlan(concertIds[i]);
+                        console.log(err);
+                    }
 
                     // ※ Ticketmaster API keys are issued with rate limitation of 5 requests per second.
                     await sleep(210);
                 }
-
 
                 // sort the plans by date
                 concerts.sort(function (a, b) {
@@ -78,7 +84,7 @@ const PlanLists = () => {
             });
     };
 
-    const deletePlan = (concertId) => {
+    function deletePlan(concertId) {
         fetch(`https://ytconcerts-server.herokuapp.com/api/users/${authCtx.userId}/plans/${concertId}`,
             {
                 method: 'DELETE'
@@ -128,14 +134,14 @@ const PlanLists = () => {
                             <PlanItem
                                 key={index}
                                 id={plan.id}
-                                imageURL={plan.images[0].url}
+                                imageURL={plan.images && plan.images[0].url}
                                 concertName={plan.name}
-                                artists={plan._embedded.attractions ? plan._embedded.attractions : ""}
-                                venue={plan._embedded.venues[0]}
+                                artists={plan._embedded && plan._embedded.attractions ? plan._embedded.attractions : ""}
+                                venue={plan._embedded && plan._embedded.venues[0]}
                                 minPrice={plan.priceRanges && plan.priceRanges[0].min}
                                 maxPrice={plan.priceRanges && plan.priceRanges[0].max}
-                                status={plan.dates.status.code}
-                                concertURL={plan.url}
+                                status={plan.dates.status && plan.dates.status.code}
+                                concertURL={plan.url && plan.url}
                                 onDelete={deletePlan}
                             />
                         </div>
