@@ -10,7 +10,6 @@ const Pagination = (props) => {
 
     const totalElements = props.totalElements;
     const size = props.size;
-    const city = props.city;
     const currentPage = props.pageNum + 1;
 
     const totalPage = Math.ceil(totalElements / size) > 50 ? 50 : Math.ceil(totalElements / size);
@@ -54,23 +53,15 @@ const Pagination = (props) => {
         history.push(path + "?" + query.toString());
     });
 
+
     return (
         <div className={paginationStyle.pagination}>
-            {
-                city ?
-                    <span onClick={() => setPageNum(currentPage-2 < 0 ? 0:currentPage-2)} className={`${paginationStyle.pageNum} ${paginationStyle.arrow}`}>❮</span>
-                    :
-                    <span onClick={() => setPageNum(currentPage-2 < 0 ? 0:currentPage-2)} className={`${paginationStyle.pageNum} ${paginationStyle.arrow}`}>❮</span>
-            }
+            <span onClick={() => setPageNum(currentPage - 2 < 0 ? 0 : currentPage - 2)} className={`${paginationStyle.pageNum} ${paginationStyle.arrow}`}>❮</span>
 
             {
                 totalPage <= 7 &&
                 pageGroup.map((pageNum, index) => {
-
-                    return city ?
-                        <span key={index} onClick={() => setPageNum(groupStart - 1 + index)} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</span>
-                        :
-                        <span key={index} onClick={() => setPageNum(groupStart - 1 + index)} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</span>
+                    return <span key={index} onClick={() => setPageNum(groupStart - 1 + index)} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</span>
                 })
             }
 
@@ -80,20 +71,11 @@ const Pagination = (props) => {
                 <span>
                     {
                         pageGroup.map((pageNum, index) => {
-
-                            return city ?
-                                <span key={index} onClick={() => setPageNum(groupStart - 1 + index)} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</span>
-                                :
-                                <span key={index} onClick={() => setPageNum(groupStart - 1 + index)} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</span>
+                            return <span key={index} onClick={() => setPageNum(groupStart - 1 + index)} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</span>
                         })
                     }
                     <span> ... </span>
-                    {
-                        city ?
-                            <span onClick={() => setPageNum(totalPage - 1)} className={paginationStyle.pageNum}>{totalPage}</span>
-                            :
-                            <span onClick={() => setPageNum(totalPage - 1)} className={paginationStyle.pageNum}>{totalPage}</span>
-                    }
+                    <span onClick={() => setPageNum(totalPage - 1)} className={paginationStyle.pageNum}>{totalPage}</span>
                 </span>
             }
 
@@ -101,29 +83,16 @@ const Pagination = (props) => {
             {
                 groupStart !== 1 && groupEnd !== totalPage &&
                 <span>
-                    {
-                        city ?
-                            <span onClick={() => setPageNum(0)} className={paginationStyle.pageNum}>1</span>
-                            :
-                            <span onClick={() => setPageNum(0)} className={paginationStyle.pageNum}>1</span>
-                    }
+                    <span onClick={() => setPageNum(0)} className={paginationStyle.pageNum}>1</span>
                     <span> ... </span>
                     {
                         pageGroup.map((pageNum, index) => {
 
-                            return city ?
-                                <span key={index} onClick={() => setPageNum(groupStart - 1 + index)} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</span>
-                                :
-                                <span key={index} onClick={() => setPageNum(groupStart - 1 + index)} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</span>
+                            return <span key={index} onClick={() => setPageNum(groupStart - 1 + index)} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</span>
                         })
                     }
                     <span> ... </span>
-                    {
-                        city ?
-                            <span onClick={() => setPageNum(totalPage - 1)} className={paginationStyle.pageNum}>{totalPage}</span>
-                            :
-                            <span onClick={() => setPageNum(totalPage - 1)} className={paginationStyle.pageNum}>{totalPage}</span>
-                    }
+                    <span onClick={() => setPageNum(totalPage - 1)} className={paginationStyle.pageNum}>{totalPage}</span>
                 </span>
             }
 
@@ -131,32 +100,19 @@ const Pagination = (props) => {
             {
                 groupStart !== 1 && groupEnd === totalPage &&
                 <span>
-                    {
-                        city ?
-                            <span onClick={() => setPageNum(0)} className={paginationStyle.pageNum}>1</span>
-                            :
-                            <span onClick={() => setPageNum(0)} className={paginationStyle.pageNum}>1</span>
-                    }
+                    <span onClick={() => setPageNum(0)} className={paginationStyle.pageNum}>1</span>
                     <span> ... </span>
                     {
                         pageGroup.map((pageNum, index) => {
 
-                            return city ?
-                                <span key={index} onClick={() => setPageNum(groupStart - 1 + index)} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</span>
-                                :
-                                <span key={index} onClick={() => setPageNum(groupStart - 1 + index)} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</span>
+                            return <span key={index} onClick={() => setPageNum(groupStart - 1 + index)} className={`${paginationStyle.pageNum} ${pageNum === currentPage ? paginationStyle.selected : ''}`}>{pageNum}</span>
                         })
                     }
                 </span>
             }
 
 
-            {
-                city ?
-                    <span onClick={() => setPageNum(currentPage > totalPage-1 ? totalPage-1 : currentPage)} className={`${paginationStyle.pageNum} ${paginationStyle.arrow}`}>❯</span>
-                    :
-                    <span onClick={() => setPageNum(currentPage > totalPage-1 ? totalPage-1 : currentPage)} className={`${paginationStyle.pageNum} ${paginationStyle.arrow}`}>❯</span>
-            }
+            <span onClick={() => setPageNum(currentPage > totalPage - 1 ? totalPage - 1 : currentPage)} className={`${paginationStyle.pageNum} ${paginationStyle.arrow}`}>❯</span>
         </div>
 
     );

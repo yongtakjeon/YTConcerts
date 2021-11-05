@@ -2,6 +2,7 @@ import concertDetailStyle from "./ConcertDetail.module.css";
 import { useContext, useEffect, useState } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { AuthContext } from "../../store/auth-context";
+import { createTicketmasterURL, CONCERT_DETAIL, createYTConcertsURL, PLAN_ADD, API_HEADER } from "../../api/api";
 
 
 function ConcertDetail() {
@@ -22,7 +23,7 @@ function ConcertDetail() {
 
         setIsLoading(true);
 
-        fetch(`https://app.ticketmaster.com/discovery/v2/events/${id}?apikey=mXh7AoIGa0ug4nVAgOBHl7hfj3BHTu7J`)
+        fetch(createTicketmasterURL(CONCERT_DETAIL, { concertId: id }))
             .then((response) => {
                 return response.json();
             })
@@ -58,12 +59,10 @@ function ConcertDetail() {
 
         event.preventDefault();
 
-        fetch(`https://ytconcerts-server.herokuapp.com/api/users/${authCtx.userId}/plans`,
+        fetch(createYTConcertsURL(PLAN_ADD, { userId: authCtx.userId }),
             {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: API_HEADER,
                 body: JSON.stringify({
                     concertId: id
                 })

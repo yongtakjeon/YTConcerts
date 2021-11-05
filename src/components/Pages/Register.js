@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { API_HEADER, API_SIGNUP, API_UPDATE_NICKNAME } from '../../api/api';
 import registerStyle from './Register.module.css';
+
 
 const Register = () => {
 
@@ -38,11 +40,9 @@ const Register = () => {
         setIsLoading(true);
 
         //call API
-        fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDTPHN12nrc4XXAV_nxW4F97LKiRK-LZ14', {
+        fetch(API_SIGNUP, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: API_HEADER,
             // 'body' part should be sent as a string so that JSON.stringfy() is used.
             body: JSON.stringify({
                 email: email,
@@ -62,11 +62,9 @@ const Register = () => {
 
 
                 //nickname update
-                fetch('https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyDTPHN12nrc4XXAV_nxW4F97LKiRK-LZ14', {
+                fetch(API_UPDATE_NICKNAME, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: API_HEADER,
                     body: JSON.stringify({
                         idToken: data.idToken,
                         displayName: nickname

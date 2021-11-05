@@ -1,5 +1,4 @@
 import FilterStyle from './FilterView.module.css';
-
 import { useLocation } from "react-router";
 import { useHistory } from "react-router-dom";
 import { useRef } from 'react';
@@ -16,7 +15,6 @@ const FilterView = (props) => {
     const endDateRef = useRef();
     const from = props.selected.date && props.selected.date.from;
     const to = props.selected.date && props.selected.date.to;
-
 
     // for genre filter
     const genres = [
@@ -90,7 +88,6 @@ const FilterView = (props) => {
     const genreIdx = genreId ? genres.findIndex((genre) => genre.id === genreId) : 0;
 
 
-
     function getCurrentDate() {
         const now = new Date();
         const month = (now.getMonth() + 1).toString().length > 1 ? now.getMonth() + 1 : '0' + (now.getMonth() + 1);
@@ -149,6 +146,7 @@ const FilterView = (props) => {
 
     }
 
+
     return <div>
 
         <h4>Filter by date</h4>
@@ -167,9 +165,9 @@ const FilterView = (props) => {
                 })
             }
         </div>
-        
-    </div>
 
-}
+    </div>;
+
+};
 
 export default FilterView;

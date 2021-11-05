@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import { CONCERT_DETAIL, createTicketmasterURL, createYTConcertsURL, PLAN_DELETE, PLAN_LIST } from '../../api/api';
 import { AuthContext } from '../../store/auth-context';
 import PlanItem from './PlanItem';
 import plansStyle from './PlanLists.module.css';
@@ -29,7 +30,7 @@ const PlanLists = () => {
         setIsLoading(true);
 
         // 1. get concert IDs (using YTConcerts server API)
-        fetch(`https://ytconcerts-server.herokuapp.com/api/users/${authCtx.userId}/plans`)
+        fetch(createYTConcertsURL(PLAN_LIST, { userId: authCtx.userId }))
             .then((response) => {
                 return response.json();
             })
@@ -49,19 +50,26 @@ const PlanLists = () => {
                 let response;
                 let data;
                 let concerts = [];
+                let failedConcertIds = [];
 
                 for (let i = 0; i < concertIds.length; i++) {
 
                     try {
-                        response = await fetch(`https://app.ticketmaster.com/discovery/v2/events/${concertIds[i]}?apikey=mXh7AoIGa0ug4nVAgOBHl7hfj3BHTu7J`);
+                        response = await fetch(createTicketmasterURL(CONCERT_DETAIL, { concertId: concertIds[i] }));
 
                         data = await response.json();
 
                         concerts.push(data);
                     }
                     catch (err) {
-                        // deletePlan(concertIds[i]);
-                        console.log(err);
+                        // // if there is an error fetching concert data from Ticketmaset API, delete the plan using YTConcerts server API
+                        // response = await fetch(`https://ytconcerts-server.herokuapp.com/api/users/${authCtx.userId}/plans/${concertIds[i]}`, { method: 'DELETE' });
+
+                        // data = await response.json();
+
+                        // failedConcertIds.push(concertIds[i]);
+
+                        // console.log(err);
                     }
 
                     // ※ Ticketmaster API keys are issued with rate limitation of 5 requests per second.
@@ -85,7 +93,7 @@ const PlanLists = () => {
     };
 
     function deletePlan(concertId) {
-        fetch(`https://ytconcerts-server.herokuapp.com/api/users/${authCtx.userId}/plans/${concertId}`,
+        fetch(createYTConcertsURL(PLAN_DELETE, { userId: authCtx.userId, concertId }),
             {
                 method: 'DELETE'
             })

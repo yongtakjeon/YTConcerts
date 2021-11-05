@@ -2,6 +2,7 @@ import loginStyle from './Login.module.css';
 import { Link, useHistory } from 'react-router-dom';
 import { useContext, useRef, useState } from 'react';
 import { AuthContext } from '../../store/auth-context';
+import { API_HEADER, API_LOGIN } from '../../api/api';
 
 
 const Login = (() => {
@@ -24,11 +25,9 @@ const Login = (() => {
 
 
         //call API
-        fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDTPHN12nrc4XXAV_nxW4F97LKiRK-LZ14', {
+        fetch(API_LOGIN, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: API_HEADER,
             body: JSON.stringify({
                 email: email,
                 password: password
@@ -74,7 +73,6 @@ const Login = (() => {
                 <button type="submit">
                     <span>Login</span>
                 </button>
-
             }
             {
                 isLoading &&

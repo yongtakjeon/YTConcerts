@@ -2,9 +2,9 @@ import concertListStyle from "./ConcertLists.module.css"
 import ConcertItem from "./ConcertItem";
 import Pagination from "../UI/Pagination";
 import FilterView from "../UI/FilterView";
-
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
+import { CONCERT_LIST, createTicketmasterURL } from "../../api/api";
 
 
 const ConcertLists = () => {
@@ -25,34 +25,11 @@ const ConcertLists = () => {
   let dateChanged = false;
 
 
-  function creatingAPIurl() {
-
-    let url = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=mXh7AoIGa0ug4nVAgOBHl7hfj3BHTu7J&classificationName=music&sort=date,name,asc&page=${pageNum}`;
-
-    if (city) {
-      url += `&city=${city}`;
-    }
-    else {
-      url += '&countryCode=CA';
-    }
-
-    if (filterDate) {
-      url += `&localStartDateTime=${filterDate}`
-    }
-
-    if (filterGenre) {
-      url += `&genreId=${filterGenre}`
-    }
-
-    return url;
-
-  };
-
   function concertsDataHandler() {
 
     setIsLoading(true);
 
-    fetch(creatingAPIurl())
+    fetch(createTicketmasterURL(CONCERT_LIST, { pageNum, city, filterDate, filterGenre }))
       .then((response) => {
         return response.json();
       })
