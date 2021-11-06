@@ -36,13 +36,12 @@ const PlanLists = () => {
             })
             .then(async (plans) => {
 
-                const concertIds = [];
+                let concertIds = [];
 
                 plans.forEach(plan => {
                     concertIds.push(plan.concertId);
                 });
 
-                setConcertIds(concertIds);
                 // console.log(concertIds);
 
 
@@ -62,18 +61,26 @@ const PlanLists = () => {
                         concerts.push(data);
                     }
                     catch (err) {
-                        // // if there is an error fetching concert data from Ticketmaset API, delete the plan using YTConcerts server API
-                        // response = await fetch(`https://ytconcerts-server.herokuapp.com/api/users/${authCtx.userId}/plans/${concertIds[i]}`, { method: 'DELETE' });
+                        // if there is an error fetching concert data using certain concertID, delete the plan from YTConcerts server
+                        response = await fetch(createYTConcertsURL(PLAN_DELETE, { userId: authCtx.userId, concertId: concertIds[i] }),
+                            { method: 'DELETE' });
 
-                        // data = await response.json();
+                        data = await response.json();
 
-                        // failedConcertIds.push(concertIds[i]);
+                        failedConcertIds.push(concertIds[i]);
 
-                        // console.log(err);
+                        console.log(err);
                     }
 
                     // ※ Ticketmaster API keys are issued with rate limitation of 5 requests per second.
                     await sleep(210);
+                }
+
+                // subtract 'failedConcertIds' from 'concertIds'
+                if (failedConcertIds.length > 0) {
+                    for (let i = 0; i < failedConcertIds.length; i++) {
+                        concertIds = concertIds.filter(id => id !== failedConcertIds[i]);
+                    }
                 }
 
                 // sort the plans by date
@@ -81,6 +88,7 @@ const PlanLists = () => {
                     return new Date(a.dates.start.localDate) - new Date(b.dates.start.localDate);
                 });
 
+                setConcertIds(concertIds);
                 setPlans(concerts);
                 setIsLoading(false);
             })
