@@ -17,11 +17,15 @@
 
   margin-bottom: 3rem;
 }
+.mainInfo {
+  width: 55%;
+}
 .concertName {
   font-family: "Rubik", sans-serif;
   font-size: 2.2rem;
 
   margin-bottom: 1.25rem;
+  overflow-wrap: break-word;
 }
 .cancelled {
   font-family: "Open Sans", sans-serif;
@@ -108,7 +112,7 @@ form {
 .greenButton {
   background-color: #00917c;
 }
-.image {
+.imageInfo {
   width: 40%;
   margin-left: 1rem;
   border-radius: 10px;
@@ -149,4 +153,56 @@ form {
   color: #000000;
   background-color: #ffffff;
   border: 0.1em solid;
+}
+
+@media (max-width: 800px) {
+  .concert-detail {
+    width: 90%;
+    margin: 0 auto;
+  }
+  .mainContent {
+    margin-bottom: 2rem;
+  }
+  .mainInfo {
+    width: 60%;
+  }
+  .concertName {
+    font-size: 1.1rem;
+    margin-bottom: 0.7rem;
+  }
+  .cancelled {
+    display: inline-block;
+    margin-top: 0.2rem;
+    margin-left: 0.3rem;
+  }
+  .artists {
+    margin-bottom: 0.25rem;
+  }
+  .artist {
+    font-size: 0.8rem;
+  }
+  .venue {
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .button {
+    font-size: 0.8rem;
+    padding: 7px 11px;
+    margin-left: 0;
+    margin-right: 0.2rem;
+  }
+  .imageInfo {
+    border-radius: 3px;
+    width: 35%;
+  }
+  .subContent {
+    font-size: 0.9rem;
+    margin-bottom: 0.7rem;
+  }
+  .contentLists {
+    margin-bottom: 0.5rem;
+  }
+  .goBackButton {
+    font-size: 1rem;
+  }
 }

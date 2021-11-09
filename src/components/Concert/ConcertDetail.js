@@ -108,9 +108,8 @@ function ConcertDetail() {
             {
                 !isLoading && !isError &&
                 <div>
-
                     <div className={concertDetailStyle.mainContent}>
-                        <div>
+                        <div className={concertDetailStyle.mainInfo}>
                             <p className={concertDetailStyle.concertName}>
                                 <span>{concert.name}</span>
                                 {
@@ -162,9 +161,8 @@ function ConcertDetail() {
                                 </span>
                             }
                         </div>
-                        {bestImg && <img src={bestImg.url} alt="Concert" className={concertDetailStyle.image} />}
+                        {bestImg && <img src={bestImg.url} alt="Concert" className={concertDetailStyle.imageInfo} />}
                     </div>
-
 
                     <div className={concertDetailStyle.subContent}>
                         {
