@@ -13,6 +13,7 @@
   font-family: "Staatliches", cursive;
   font-size: 2.2rem;
   color: #002366;
+  margin-bottom: 2rem;
 
   transition: 0.5s;
 }
@@ -20,9 +21,20 @@
 .concert-list {
   display: flex;
   flex-direction: column;
-  margin-left: 1rem;
 
   transition: 0.5s;
+}
+.FilterView {
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+}
+.pagination {
+  margin: 0 auto;
+  margin-top: 2rem;
+}
+.concerts {
+  width: 80%;
+  margin: 0 auto;
 }
 
 .city {
@@ -64,7 +76,7 @@
 
 @media (max-width: 800px) {
   .content {
-    margin: 0 1rem;
+    margin: 0 0.75rem;
   }
   .section-title {
     font-size: 1.5rem;
@@ -73,6 +85,9 @@
   .concert-list {
     padding: 0;
     align-items: center;
+  }
+  .concerts {
+    width: 100%;
   }
   .date {
     font-size: 1.2rem;

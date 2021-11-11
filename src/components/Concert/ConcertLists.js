@@ -76,46 +76,54 @@ const ConcertLists = () => {
       {
         !isLoading && !isError && concerts.length > 0 &&
         <div className={concertListStyle['concert-list']}>
+          <div className={concertListStyle.FilterView} >
+            <FilterView
+              selected={{
+                genre: filterGenre && filterGenre,
+                date: filterDate &&
+                {
+                  from: filterDate.substring(0, 10),
+                  to: filterDate.split(',')[1].substring(0, 10)
+                }
+              }}
+            />
+          </div>
 
-          <FilterView
-            selected={{
-              genre: filterGenre && filterGenre,
-              date: filterDate &&
-              {
-                from: filterDate.substring(0, 10),
-                to: filterDate.split(',')[1].substring(0, 10)
-              }
-            }} />
+          <div className={concertListStyle.pagination}>
+            <Pagination size={pageInfo.size} totalElements={pageInfo.totalElements} city={city} pageNum={parseInt(pageNum)} />
+          </div>
 
-          <Pagination size={pageInfo.size} totalElements={pageInfo.totalElements} city={city} pageNum={parseInt(pageNum)} />
+          <div className={concertListStyle.concerts}>
+            {
+              concerts.map((concert, index) => {
 
-          {
-            concerts.map((concert, index) => {
+                dateChanged = false;
 
-              dateChanged = false;
+                if (concertDate !== concert.dates.start.localDate) {
+                  dateChanged = true;
+                  concertDate = concert.dates.start.localDate;
+                }
 
-              if (concertDate !== concert.dates.start.localDate) {
-                dateChanged = true;
-                concertDate = concert.dates.start.localDate;
-              }
+                return <div key={index}>
+                  {dateChanged && <p className={concertListStyle.date}>{concert.dates.start.localDate.replaceAll('-', '/')}</p>}
+                  <ConcertItem
+                    id={concert.id}
+                    imageURL={concert.images[0].url}
+                    concertName={concert.name}
+                    artists={concert._embedded.attractions ? concert._embedded.attractions : ""}
+                    venue={concert._embedded.venues[0]}
+                    minPrice={concert.priceRanges && concert.priceRanges[0].min}
+                    maxPrice={concert.priceRanges && concert.priceRanges[0].max}
+                    status={concert.dates.status.code}
+                  />
+                </div>;
+              })
+            }
+          </div>
 
-              return <div key={index}>
-                {dateChanged && <p className={concertListStyle.date}>{concert.dates.start.localDate.replaceAll('-', '/')}</p>}
-                <ConcertItem
-                  id={concert.id}
-                  imageURL={concert.images[0].url}
-                  concertName={concert.name}
-                  artists={concert._embedded.attractions ? concert._embedded.attractions : ""}
-                  venue={concert._embedded.venues[0]}
-                  minPrice={concert.priceRanges && concert.priceRanges[0].min}
-                  maxPrice={concert.priceRanges && concert.priceRanges[0].max}
-                  status={concert.dates.status.code}
-                />
-              </div>;
-            })
-          }
-
-          <Pagination size={pageInfo.size} totalElements={pageInfo.totalElements} city={city} pageNum={parseInt(pageNum)} />
+          <div className={concertListStyle.pagination}>
+            <Pagination size={pageInfo.size} totalElements={pageInfo.totalElements} city={city} pageNum={parseInt(pageNum)} />
+          </div>
         </div>
       }
 
