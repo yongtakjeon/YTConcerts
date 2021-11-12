@@ -30,8 +30,8 @@ const Header = () => {
 
                     <span className={headerStyle.nickName}>{authCtx.nickname}😃</span>
 
-                    <Link to="/plans" style={{ margin: '0 auto' }}>
-                        <button className={`${headerStyle.buttons} ${headerStyle.afterLoginButtons} ${headerStyle.plans}`}>Plans</button>
+                    <Link to="/plans" className={headerStyle.afterLoginButtons}>
+                        <button className={`${headerStyle.buttons} ${headerStyle.plans}`}>Plans</button>
                     </Link>
 
                     <button className={`${headerStyle.buttons} ${headerStyle.afterLoginButtons}`} onClick={authCtx.logout}>Log Out</button>
