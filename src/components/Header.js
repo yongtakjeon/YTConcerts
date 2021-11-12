@@ -26,15 +26,15 @@ const Header = () => {
             }
             {
                 authCtx.isLoggedIn &&
-                <div className={headerStyle.beforeLogin}>
+                <div className={headerStyle.afterLogin}>
 
-                    <span className={headerStyle.nickName}> {authCtx.nickname} </span>
+                    <span className={headerStyle.nickName}>{authCtx.nickname}😃</span>
 
-                    <Link to="/plans">
-                        <button className={headerStyle.buttons}>Plans</button>
+                    <Link to="/plans" style={{ margin: '0 auto' }}>
+                        <button className={`${headerStyle.buttons} ${headerStyle.afterLoginButtons} ${headerStyle.plans}`}>Plans</button>
                     </Link>
 
-                    <button className={headerStyle.buttons} onClick={authCtx.logout}>Log Out</button>
+                    <button className={`${headerStyle.buttons} ${headerStyle.afterLoginButtons}`} onClick={authCtx.logout}>Log Out</button>
                 </div>
             }
         </div>
