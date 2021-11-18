@@ -149,19 +149,21 @@ const FilterView = (props) => {
 
     return <div>
 
-        <h4>Filter by date</h4>
-        <div>
-            <input type='date' ref={startDateRef} defaultValue={from} />
+        <h4 className={FilterStyle.filterTitle}>Filter by date</h4>
+        <div className={FilterStyle.date}>
+            <span className={FilterStyle.fromToTitle}>From:</span>
+            <input type='date' ref={startDateRef} defaultValue={from} /> <br />
+            <span className={FilterStyle.fromToTitle}>To:</span>
             <input type='date' ref={endDateRef} defaultValue={to} />
-            <button onClick={resetFilterDate}>↺</button>
-            <button onClick={setFilterDate}>Search</button>
+            <button onClick={resetFilterDate} className={`${FilterStyle.dateButton} ${FilterStyle.reset}`}>↺</button>
+            <button onClick={setFilterDate} className={`${FilterStyle.dateButton} ${FilterStyle.search}`}>Search</button>
         </div>
 
-        <h4>Filter by genre</h4>
-        <div className={FilterStyle.tagContainer}>
+        <h4 className={FilterStyle.filterTitle}>Filter by genre</h4>
+        <div className={FilterStyle.genre}>
             {
                 genres.map((genre, index) => {
-                    return <span key={index} onClick={() => setFilterGenre(genre.id)} className={`${FilterStyle.tag} ${index === genreIdx && FilterStyle.selected}`}>{genre.name}</span>
+                    return <button key={index} onClick={() => setFilterGenre(genre.id)} className={`${FilterStyle.genreItem} ${index === genreIdx && FilterStyle.selectedGenre}`}>{genre.name}</button>
                 })
             }
         </div>

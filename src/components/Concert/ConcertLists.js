@@ -90,7 +90,7 @@ const ConcertLists = () => {
           </div>
 
           <div className={concertListStyle.pagination}>
-            <Pagination size={pageInfo.size} totalElements={pageInfo.totalElements} city={city} pageNum={parseInt(pageNum)} />
+            <Pagination size={pageInfo.size} totalElements={pageInfo.totalElements} pageNum={parseInt(pageNum)} />
           </div>
 
           <div className={concertListStyle.concerts}>
@@ -122,7 +122,7 @@ const ConcertLists = () => {
           </div>
 
           <div className={concertListStyle.pagination}>
-            <Pagination size={pageInfo.size} totalElements={pageInfo.totalElements} city={city} pageNum={parseInt(pageNum)} />
+            <Pagination size={pageInfo.size} totalElements={pageInfo.totalElements} pageNum={parseInt(pageNum)} />
           </div>
         </div>
       }

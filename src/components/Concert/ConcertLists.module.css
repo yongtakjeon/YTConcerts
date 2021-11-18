@@ -8,16 +8,18 @@
 
   transition: 0.5s;
 }
-
 .section-title {
   font-family: "Staatliches", cursive;
   font-size: 2.2rem;
   color: #002366;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 
   transition: 0.5s;
 }
-
+.city {
+  color: #9d0b0b;
+  font-size: 1.2em;
+}
 .concert-list {
   display: flex;
   flex-direction: column;
@@ -25,23 +27,21 @@
   transition: 0.5s;
 }
 .FilterView {
-  margin-left: 1rem;
-  margin-bottom: 1rem;
+  margin: 0 auto;
+  margin-bottom: 3.5rem;
+  border: 1.5px solid lightgray;
+  border-radius: 15px;
+  padding: 25px;
+  width: 85%;
 }
 .pagination {
   margin: 0 auto;
-  margin-top: 2rem;
 }
 .concerts {
   width: 80%;
   margin: 0 auto;
+  margin-bottom: 2.5rem;
 }
-
-.city {
-  color: #9d0b0b;
-  font-size: 1.2em;
-}
-
 .date {
   margin-top: 3rem;
   margin-bottom: 1rem;
@@ -50,7 +50,6 @@
 
   transition: 0.5s;
 }
-
 .loading {
   font-family: "Cabin", sans-serif;
   font-size: 1.75rem;
@@ -80,14 +79,23 @@
   }
   .section-title {
     font-size: 1.5rem;
-    margin-bottom: 0;
+    margin-bottom: 1rem;
   }
   .concert-list {
     padding: 0;
     align-items: center;
   }
+  .FilterView {
+    padding: 15px;
+    border: 1px solid lightgray;
+    margin-bottom: 2.5rem;
+  }
+  .pagination:last-child {
+    margin-bottom: 3rem;
+  }
   .concerts {
     width: 100%;
+    margin-bottom: 1rem;
   }
   .date {
     font-size: 1.2rem;
