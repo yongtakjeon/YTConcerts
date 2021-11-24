@@ -60,30 +60,25 @@ const Login = (() => {
     };
 
     return (
-        <form onSubmit={submitHandler}>
-            <h2>Log In</h2>
-
-            <input type="email" placeholder="Email" name="email" required autoFocus ref={emailRef} />
-            <br />
-            <input type="password" placeholder="Password" name="password" required ref={passwordRef} />
-            <br />
-
-            {
-                !isLoading &&
-                <button type="submit">
-                    <span>Login</span>
-                </button>
-            }
-            {
-                isLoading &&
-                <button disabled>
-                    <span>Processing Request</span>
-                </button>
-            }
-
+        <form onSubmit={submitHandler} className={loginStyle.login}>
+            <h2 className={loginStyle.title}>Sign In</h2>
             <Link to="/register">
-                <button>Register</button>
+                <span className={loginStyle.registerLink}>Don’t have an account yet? Sign up.</span>
             </Link>
+            <input type="email" placeholder="Email" name="email" required autoFocus ref={emailRef} className={loginStyle.inputBox} />
+            <br />
+            <input type="password" placeholder="Password" name="password" required ref={passwordRef} className={loginStyle.inputBox} />
+
+            <div className={loginStyle.buttons}>
+                {
+                    !isLoading &&
+                    <button type="submit" className={loginStyle.button}>Log In</button>
+                }
+                {
+                    isLoading &&
+                    <button disabled className={`${loginStyle.button} ${loginStyle.processingButton}`}>Processing Request</button>
+                }
+            </div>
         </form>
     );
 });

@@ -74,9 +74,9 @@
   -moz-border-radius: 50px;
   border-radius: 50px;
   text-decoration: none;
-  -webkit-box-shadow: 1px 1px 10px 0 #ffffff;
-  -moz-box-shadow: 1px 1px 10px 0 #ffffff;
-  box-shadow: 1px 1px 10px 0 #ffffff;
+  -webkit-box-shadow: 1px 1px 10px 0 #1e62d0;
+  -moz-box-shadow: 1px 1px 10px 0 #1e62d0;
+  box-shadow: 1px 1px 10px 0 #1e62d0;
 }
 .nickName {
   color: white;

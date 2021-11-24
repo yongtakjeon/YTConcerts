@@ -1,0 +1,111 @@
+@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=M+PLUS+2&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
+
+.login {
+  display: block;
+  width: 300px;
+  margin: 0 auto;
+  margin-bottom: 100px;
+  padding: 20px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px gray;
+}
+.title {
+  text-align: center;
+  font-family: "Righteous", cursive;
+  padding-bottom: 2rem;
+  font-size: 1.75rem;
+}
+.registerLink {
+  display: inline-block;
+  padding-bottom: 1.5rem;
+  text-decoration: none;
+  color: #2978b5;
+  font-family: "M PLUS 2", sans-serif;
+  font-size: 15px;
+}
+.registerLink:hover {
+  text-decoration: underline;
+}
+.inputBox {
+  width: 292.5px;
+  height: 30px;
+  margin-bottom: 10px;
+}
+.buttons {
+  text-align: center;
+}
+.button {
+  appearance: button;
+  border: solid transparent;
+  cursor: pointer;
+  background-color: #289672;
+  border-radius: 16px;
+  border-width: 0 0 4px;
+  box-sizing: border-box;
+  color: #ffffff;
+  display: inline-block;
+  font-family: "Nunito", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  line-height: 20px;
+  margin: 5px;
+  outline: none;
+  overflow: visible;
+  padding: 13px 22.5px;
+  text-align: center;
+  touch-action: manipulation;
+  transform: translateZ(0);
+  transition: filter 0.2s;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.button:after {
+  background-clip: padding-box;
+  border: solid transparent;
+  background-color: #29bb89;
+  border-radius: 16px;
+  border-width: 0 0 4px;
+  bottom: -4px;
+  content: "";
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
+.button:main,
+.button:focus {
+  user-select: auto;
+}
+.button:disabled {
+  cursor: auto;
+}
+.button:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+.processingButton {
+  background-color: #7e7474;
+}
+.processingButton::after {
+  background-color: #c4b6b6;
+}
+
+@media (max-width: 800px) {
+  .title {
+    font-size: 1.5rem;
+  }
+  .registerLink {
+    font-size: 12.5px;
+  }
+  .button {
+    font-size: 0.8rem;
+    padding: 5px 15px;
+    margin: 10px;
+  }
+}

@@ -36,7 +36,6 @@ const Register = () => {
             return;
         }
 
-
         setIsLoading(true);
 
         //call API
@@ -92,43 +91,36 @@ const Register = () => {
 
     };
 
-    return <div>
-        <form onSubmit={submitHandler}>
-            <h2>Register</h2>
-            <input type="email" placeholder="Email" name="email" required autoFocus ref={emailRef} /> <br />
+    return (
+        <form onSubmit={submitHandler} className={registerStyle.register}>
+            <h2 className={registerStyle.title}>Sign Up</h2>
+            <input type="email" placeholder="Email" name="email" required autoFocus ref={emailRef} className={registerStyle.inputBox} /> <br />
+            <input type="password" placeholder="Password" name="password" required ref={passwordRef} className={registerStyle.inputBox} /> <br />
+            <input type="password" placeholder="Password confirm" name="password2" required ref={password2Ref} className={registerStyle.inputBox} />
+            <br />
+            <input type="text" placeholder="Nickname" name="nickname" required ref={nicknameRef} className={registerStyle.inputBox} /> <br />
 
-            <input type="password" placeholder="Password" name="password" required ref={passwordRef} /> <br />
+            <div className={registerStyle.buttons}>
+                {
+                    !isLoading &&
+                    <button type="submit" className={registerStyle.button}>Register</button>
+                }
+                {
+                    isLoading &&
+                    <button disabled className={`${registerStyle.button} ${registerStyle.processingButton}`}>Processing Request</button>
+                }
 
-            <input type="password" placeholder="Password Confirm" name="password2" required ref={password2Ref} /> <br />
-
-            <input type="text" placeholder="Nick Name" name="nickname" required ref={nicknameRef} /> <br />
-
-            {
-                !isLoading &&
-                <button type="submit">
-                    <span>Register</span>
-                </button>
-
-            }
-
-            {
-                isLoading &&
-                <button disabled>
-                    <span>Processing Request</span>
-                </button>
-            }
-
-        </form>
-
-        {
-            isRegistered &&
-            <div>Registration Successful. Proceed to<br /><br />
-                <button>
-                    <Link to="/login">Log In</Link>
-                </button>
+                {
+                    isRegistered &&
+                    <div><br /><br /><span className={registerStyle.loginNotice}>Registration Successful. Proceed to</span><br /><br />
+                        <Link to="/login">
+                            <button className={`${registerStyle.button} ${registerStyle.loginButton}`}>Log In</button>
+                        </Link>
+                    </div>
+                }
             </div>
-        }
-    </div>;
+        </form>
+    );
 };
 
 export default Register;
