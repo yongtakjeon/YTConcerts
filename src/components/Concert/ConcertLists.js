@@ -1,4 +1,4 @@
-import concertListStyle from "./ConcertLists.module.css"
+import concertListStyle from "./ConcertLists.module.css";
 import ConcertItem from "./ConcertItem";
 import Pagination from "../UI/Pagination";
 import FilterView from "../UI/FilterView";
@@ -68,7 +68,7 @@ const ConcertLists = () => {
 
       {/* === 1 === */}
       {
-        isLoading && <p className={concertListStyle.loading}>Concerts list is loading...👾</p>
+        isLoading && <p className={concertListStyle.loading}>Concerts lists are loading...👾</p>
       }
 
 

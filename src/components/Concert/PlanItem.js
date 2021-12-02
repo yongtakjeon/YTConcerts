@@ -10,7 +10,6 @@ const PlanItem = (props) => {
 
 
     return (
-
         <div className={planItemStyle['plan-item']}>
 
             <ConcertItem
@@ -26,9 +25,9 @@ const PlanItem = (props) => {
 
             <div className={planItemStyle['plan-options']}>
                 <Link to={{ pathname: props.concertURL }} target="_blank">
-                    <button>BUY TICKETS</button>
+                    <button className={`${planItemStyle.button} ${planItemStyle.buyTickets}`}>BUY TICKETS</button>
                 </Link>
-                <button onClick={deletePlan}>DELETE</button>
+                <button onClick={deletePlan} className={`${planItemStyle.button} ${planItemStyle.delete}`}>DELETE</button>
             </div>
 
         </div>

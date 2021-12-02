@@ -1,8 +1,8 @@
+import planListStyle from "./PlanLists.module.css";
 import { useContext, useEffect, useState } from 'react';
 import { CONCERT_DETAIL, createTicketmasterURL, createYTConcertsURL, PLAN_DELETE, PLAN_LIST } from '../../api/api';
 import { AuthContext } from '../../store/auth-context';
 import PlanItem from './PlanItem';
-import plansStyle from './PlanLists.module.css';
 
 
 const PlanLists = () => {
@@ -121,11 +121,16 @@ const PlanLists = () => {
     }, []);
 
 
-    return <div>
+    return <div className={planListStyle.content}>
+        <p className={planListStyle.title}>Plans</p>
 
         {/* === 1 === */}
         {
-            isLoading && <p>Loading...</p>
+            isLoading &&
+            <p className={planListStyle.loading}>
+                Plan lists are loading...👾
+                <p style={{ fontSize: '0.75em' }}>It could take a few seconds to load the plan lists.</p>
+            </p>
         }
 
 
@@ -133,36 +138,37 @@ const PlanLists = () => {
         {
             !isLoading && !isError && plans.length > 0 &&
             <div>
-                <p>Plans</p>
-                <p>You're tracking {concertIds.length} upcoming concerts. </p>
-                {
-                    plans.map((plan, index) => {
+                <p className={planListStyle.planNotice}>You're tracking <span className={planListStyle.planNumber}>{concertIds.length}</span> concerts. </p>
+                <div className={planListStyle.concerts}>
+                    {
+                        plans.map((plan, index) => {
 
-                        dateChanged = false;
+                            dateChanged = false;
 
-                        if (concertDate !== plan.dates.start.localDate) {
-                            dateChanged = true;
-                            concertDate = plan.dates.start.localDate;
-                        }
+                            if (concertDate !== plan.dates.start.localDate) {
+                                dateChanged = true;
+                                concertDate = plan.dates.start.localDate;
+                            }
 
-                        return <div key={index}>
-                            {dateChanged && <p className={plansStyle.date}>{plan.dates.start.localDate.replaceAll('-', '/')}</p>}
-                            <PlanItem
-                                key={index}
-                                id={plan.id}
-                                imageURL={plan.images && plan.images[0].url}
-                                concertName={plan.name}
-                                artists={plan._embedded && plan._embedded.attractions ? plan._embedded.attractions : ""}
-                                venue={plan._embedded && plan._embedded.venues[0]}
-                                minPrice={plan.priceRanges && plan.priceRanges[0].min}
-                                maxPrice={plan.priceRanges && plan.priceRanges[0].max}
-                                status={plan.dates.status && plan.dates.status.code}
-                                concertURL={plan.url && plan.url}
-                                onDelete={deletePlan}
-                            />
-                        </div>
-                    })
-                }
+                            return <div key={index}>
+                                {dateChanged && <p className={planListStyle.date}>{plan.dates.start.localDate.replaceAll('-', '/')}</p>}
+                                <PlanItem
+                                    key={index}
+                                    id={plan.id}
+                                    imageURL={plan.images && plan.images[0].url}
+                                    concertName={plan.name}
+                                    artists={plan._embedded && plan._embedded.attractions ? plan._embedded.attractions : ""}
+                                    venue={plan._embedded && plan._embedded.venues[0]}
+                                    minPrice={plan.priceRanges && plan.priceRanges[0].min}
+                                    maxPrice={plan.priceRanges && plan.priceRanges[0].max}
+                                    status={plan.dates.status && plan.dates.status.code}
+                                    concertURL={plan.url && plan.url}
+                                    onDelete={deletePlan}
+                                />
+                            </div>
+                        })
+                    }
+                </div>
             </div>
         }
 
@@ -170,19 +176,17 @@ const PlanLists = () => {
         {/* === 3 === */}
         {
             !isLoading && !isError && plans.length === 0 &&
-            <div>
-                <p>There is no plans at this time.</p>
-            </div>
+            <p className={planListStyle.empty}>There is no plan at the moment.🤔</p>
         }
 
 
         {/* === 4 === */}
         {
             !isLoading && isError &&
-            <p>{errMsg}</p>
+            <p className={planListStyle.error}>{errMsg}</p>
         }
 
-    </div>
+    </div >
 };
 
 export default PlanLists;

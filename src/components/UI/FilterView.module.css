@@ -55,6 +55,7 @@
   flex-wrap: wrap;
 }
 .genreItem {
+  color: black;
   cursor: pointer;
   padding: 15px 10px;
   margin-left: 2px;
@@ -94,7 +95,6 @@
     margin-left: 0;
   }
   .genreItem {
-    color: black;
     font-size: 0.6rem;
     padding: 9px 6px;
   }
