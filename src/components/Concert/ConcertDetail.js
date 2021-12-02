@@ -169,7 +169,14 @@ function ConcertDetail() {
                             concert.dates &&
                             <p className={concertDetailStyle.contentLists}>
                                 <span className={concertDetailStyle.title}>Start: </span>
-                                <span className={concertDetailStyle.content}>{concert.dates.start.localDate} at {concert.dates.start.localTime.substring(0, 5)} (Time zone: {concert.dates.timezone})</span>
+                                <span className={concertDetailStyle.content}>
+                                    {concert.dates.start.localDate}
+                                    {
+                                        concert.dates.start.localTime &&
+                                        <span>&nbsp;at {concert.dates.start.localTime.substring(0, 5)}</span>
+                                    }
+                                    &nbsp;(Time zone: {concert.dates.timezone})
+                                </span>
                             </p>
                         }
                         <p className={concertDetailStyle.contentLists}>
