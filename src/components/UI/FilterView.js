@@ -17,6 +17,7 @@ const FilterView = (props) => {
     const to = props.selected.date && props.selected.date.to;
 
     // for genre filter
+    // The id of genre will be used when Ticketmaster URL is created.
     const genres = [
         {
             name: 'All',
@@ -88,6 +89,7 @@ const FilterView = (props) => {
     const genreIdx = genreId ? genres.findIndex((genre) => genre.id === genreId) : 0;
 
 
+    // get current date in the form of 'YYYY-MM-DD'
     function getCurrentDate() {
         const now = new Date();
         const month = (now.getMonth() + 1).toString().length > 1 ? now.getMonth() + 1 : '0' + (now.getMonth() + 1);
@@ -96,11 +98,13 @@ const FilterView = (props) => {
         return now.getFullYear() + '-' + month + '-' + date;
     }
 
+    // This function will be executed when 'Search' button is clicked.
     const setFilterDate = () => {
 
         const from = startDateRef.current.value;
         const to = endDateRef.current.value;
 
+        // when user select a invalid date range
         if (from < getCurrentDate()) {
             alert("From date cannot be earlier than today's date.");
 
@@ -113,15 +117,21 @@ const FilterView = (props) => {
             startDateRef.current.value = "";
             endDateRef.current.value = "";
         }
+        // when user select a valid date range
         else {
             const date = `${from}T00:00:00,${to}T23:59:59`;
+
+            // set the query parameters
             query.set('localStartDateTime', date);
             query.set('page', 0);
+
+            // URLSearchParams.toString(): returns a query string suitable for use in a URL.
             history.push(path + "?" + query.toString());
         }
 
     };
 
+    // This function will be executed when '↺' button is clicked.
     const resetFilterDate = () => {
         query.delete('localStartDateTime');
         query.set('page', 0);
@@ -131,6 +141,7 @@ const FilterView = (props) => {
         endDateRef.current.value = "";
     };
 
+    // This function will be executed when one of genres is clicked.
     const setFilterGenre = (genreId) => {
 
         if (genreId === '0') {
@@ -144,7 +155,7 @@ const FilterView = (props) => {
             history.push(path + "?" + query.toString());
         }
 
-    }
+    };
 
 
     return <div>

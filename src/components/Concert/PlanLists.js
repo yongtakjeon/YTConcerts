@@ -17,7 +17,7 @@ const PlanLists = () => {
     let concertDate = "";
     let dateChanged = false;
 
-
+    // sleep for a specified number of milliseconds
     const sleep = (milliseconds) => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -26,6 +26,7 @@ const PlanLists = () => {
         })
     };
 
+    // fetch the plan lists data
     const getPlans = () => {
         setIsLoading(true);
 
@@ -100,6 +101,8 @@ const PlanLists = () => {
             });
     };
 
+    // This function will be sent to each of PlanItem component,
+    // and in the PlanItem component, if 'DELETE' button is clicked, this function will be executed receiving 'concertId' from PlanItem.
     function deletePlan(concertId) {
         fetch(createYTConcertsURL(PLAN_DELETE, { userId: authCtx.userId, concertId }),
             {
@@ -124,7 +127,7 @@ const PlanLists = () => {
     return <div className={planListStyle.content}>
         <p className={planListStyle.title}>Plans</p>
 
-        {/* === 1 === */}
+        {/* === 1 - when it is still loading === */}
         {
             isLoading &&
             <p className={planListStyle.loading}>
@@ -134,7 +137,7 @@ const PlanLists = () => {
         }
 
 
-        {/* === 2 === */}
+        {/* === 2 - when the loading is finished, and there is no error, and plans.length is greater than 0 === */}
         {
             !isLoading && !isError && plans.length > 0 &&
             <div>
@@ -173,14 +176,14 @@ const PlanLists = () => {
         }
 
 
-        {/* === 3 === */}
+        {/* === 3 - when the loading is finished, and there is no error, but plans.length is equal to 0 === */}
         {
             !isLoading && !isError && plans.length === 0 &&
             <p className={planListStyle.empty}>There is no plan at the moment.🤔</p>
         }
 
 
-        {/* === 4 === */}
+        {/* === 4 - when loading is finished, but there is an error === */}
         {
             !isLoading && isError &&
             <p className={planListStyle.error}>{errMsg}</p>

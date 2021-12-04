@@ -19,6 +19,7 @@ function ConcertDetail() {
     const authCtx = useContext(AuthContext);
 
 
+    // fetch the concert detail data using Ticketmaster API
     function concertDataHandler() {
 
         setIsLoading(true);
@@ -39,6 +40,7 @@ function ConcertDetail() {
 
     };
 
+    // find out the best quality of image among "concert.images" array
     function settingBestImg() {
         if (concert.images) {
             let img;
@@ -55,6 +57,7 @@ function ConcertDetail() {
         }
     };
 
+    // This function will be executed when 'Save to Plans' button is clicked.
     const addPlanHandler = (event) => {
 
         event.preventDefault();
@@ -98,13 +101,13 @@ function ConcertDetail() {
     return (
         <div className={concertDetailStyle['concert-detail']}>
 
-            {/* 1 */}
+            {/* 1 - when it is still loading */}
             {
                 isLoading && <p>Loading...</p>
             }
 
 
-            {/* 2 */}
+            {/* 2 - when loading is finished, and there is no error */}
             {
                 !isLoading && !isError &&
                 <div>
@@ -221,7 +224,7 @@ function ConcertDetail() {
             }
 
 
-            {/* 3 */}
+            {/* 3 - when loading is finished, but there is an error */}
             {
                 !isLoading && isError &&
                 <p>{errMsg}</p>

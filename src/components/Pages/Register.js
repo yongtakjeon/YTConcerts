@@ -15,6 +15,7 @@ const Register = () => {
     const [isRegistered, setIsRegistered] = useState(false);
 
 
+    // This function will be executed when 'Register' button is clicked.
     const submitHandler = (event) => {
 
         event.preventDefault();
@@ -32,13 +33,13 @@ const Register = () => {
         }
 
         if (nickname.trim() === "") {
-            alert("Enter your nick name.")
+            alert("Enter the nick name.")
             return;
         }
 
         setIsLoading(true);
 
-        //call API
+        // attempt to sign up using Firebase Auth API
         fetch(API_SIGNUP, {
             method: 'POST',
             headers: API_HEADER,
@@ -60,7 +61,7 @@ const Register = () => {
                 }
 
 
-                //nickname update
+                // if sign up is successful, register the nickname as well using 'Update profile' of Firebase Auth API
                 fetch(API_UPDATE_NICKNAME, {
                     method: 'POST',
                     headers: API_HEADER,

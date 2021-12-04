@@ -8,6 +8,7 @@ import AuthContextProvider from "./store/auth-context";
 ReactDOM.render(
   <React.StrictMode>
     <AuthContextProvider>
+      {/* Now all components under this 'App' component have the right to access the data contained in the Context. */}
       <App />
     </AuthContextProvider>
   </React.StrictMode>,

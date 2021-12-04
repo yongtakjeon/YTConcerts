@@ -14,6 +14,7 @@ const Login = (() => {
     const [isLoading, setIsLoading] = useState(false);
 
 
+    // This function will be executed when 'Log In' button is clicked.
     const submitHandler = (event) => {
 
         event.preventDefault();
@@ -24,7 +25,7 @@ const Login = (() => {
         setIsLoading(true);
 
 
-        //call API
+        // attempt to sign in and get the 'userId' and 'nickname' using Firebase Auth API
         fetch(API_LOGIN, {
             method: 'POST',
             headers: API_HEADER,
@@ -46,7 +47,7 @@ const Login = (() => {
                     return;
                 }
 
-                // save the userId, nickname
+                // save the userId, nickname to Context
                 authCtx.login(data.localId, data.displayName);
 
                 // redirect to the home page

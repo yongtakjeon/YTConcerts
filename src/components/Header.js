@@ -12,6 +12,7 @@ const Header = () => {
         <div className={headerStyle.header}>
             <h1 className={headerStyle.mainTitle}>YT Concerts</h1>
 
+            {/* when user is not logged in */}
             {
                 !authCtx.isLoggedIn &&
                 <div className={headerStyle.beforeLogin}>
@@ -24,6 +25,8 @@ const Header = () => {
                     </Link>
                 </div>
             }
+
+            {/* when user is logged in */}
             {
                 authCtx.isLoggedIn &&
                 <div className={headerStyle.afterLogin}>

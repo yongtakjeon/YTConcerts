@@ -4,6 +4,7 @@ import ConcertItem from './ConcertItem';
 
 const PlanItem = (props) => {
 
+    // This function will be executed when 'DELETE' button is clicked.
     const deletePlan = () => {
         props.onDelete(props.id);
     };

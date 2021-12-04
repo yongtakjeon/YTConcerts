@@ -24,7 +24,7 @@ const ConcertLists = () => {
   let concertDate = "";
   let dateChanged = false;
 
-
+  // fetch the concert lists data using Ticketmaster API
   function concertsDataHandler() {
 
     setIsLoading(true);
@@ -54,6 +54,7 @@ const ConcertLists = () => {
 
   };
 
+  // Whenever city, pageNum, filterDate or filterGenre is changed, concertsDataHandler() will be executed again.
   useEffect(() => {
     concertsDataHandler();
   }, [city, pageNum, filterDate, filterGenre]);
@@ -66,13 +67,13 @@ const ConcertLists = () => {
         Upcoming Concerts of <span className={concertListStyle.city}>{city ? city : "Canada"}</span>
       </p>
 
-      {/* === 1 === */}
+      {/* === 1 - when it is still loading === */}
       {
         isLoading && <p className={concertListStyle.loading}>Concerts lists are loading...👾</p>
       }
 
 
-      {/* === 2 === */}
+      {/* === 2 - when the loading is finished, and there is no error, and concerts.length is greater than 0 === */}
       {
         !isLoading && !isError && concerts.length > 0 &&
         <div className={concertListStyle['concert-list']}>
@@ -128,7 +129,7 @@ const ConcertLists = () => {
       }
 
 
-      {/* === 3 === */}
+      {/* === 3 - when the loading is finished, and there is no error, but concerts.length is equal to 0 === */}
       {
         !isLoading && !isError && concerts.length === 0 &&
         <div>
@@ -146,7 +147,7 @@ const ConcertLists = () => {
       }
 
 
-      {/* === 4 === */}
+      {/* === 4 - when loading is finished, but there is an error === */}
       {
         !isLoading && isError &&
         <p className={concertListStyle.error}>{errMsg}</p>
