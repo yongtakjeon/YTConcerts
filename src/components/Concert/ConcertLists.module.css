@@ -60,7 +60,7 @@
 .empty {
   font-family: "Fjalla One", sans-serif;
   font-size: 1.5rem;
-  margin-top: 2.5rem;
+  margin: 2.5rem 0 15rem 5rem;
 
   transition: 0.5s;
 }
@@ -104,6 +104,10 @@
   .loading {
     font-size: 1rem;
     margin-top: 2rem;
+  }
+  .empty {
+    font-size: 1.25rem;
+    margin: 0;
   }
   .error {
     font-size: 1rem;

@@ -133,17 +133,20 @@ const ConcertLists = () => {
       {
         !isLoading && !isError && concerts.length === 0 &&
         <div>
-          <FilterView
-            selected={{
-              genre: filterGenre && filterGenre,
-              date: filterDate &&
-              {
-                from: filterDate.substring(0, 10),
-                to: filterDate.split(',')[1].substring(0, 10)
-              }
-            }} />
+          <div className={concertListStyle.FilterView}>
+            <FilterView
+              selected={{
+                genre: filterGenre && filterGenre,
+                date: filterDate &&
+                {
+                  from: filterDate.substring(0, 10),
+                  to: filterDate.split(',')[1].substring(0, 10)
+                }
+              }} />
+          </div>
           <p className={concertListStyle.empty}>There is no upcoming concerts!😲</p>
         </div>
+
       }
 
 

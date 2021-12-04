@@ -103,7 +103,7 @@ function ConcertDetail() {
 
             {/* 1 - when it is still loading */}
             {
-                isLoading && <p>Loading...</p>
+                isLoading && <p className={concertDetailStyle.loading}>Concert info is loading...👾</p>
             }
 
 
