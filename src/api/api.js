@@ -39,13 +39,13 @@ export const createYTConcertsURL = (api, data) => {
 
     switch (api) {
         case PLAN_LIST:
-            url = `https://ytconcerts-server.herokuapp.com/api/users/${data.userId}/plans`;
+            url = `https://ytconcerts-server-82f8fe476e27.herokuapp.com/api/users/${data.userId}/plans`;
             break;
         case PLAN_ADD:
-            url = `https://ytconcerts-server.herokuapp.com/api/users/${data.userId}/plans`;
+            url = `https://ytconcerts-server-82f8fe476e27.herokuapp.com/api/users/${data.userId}/plans`;
             break;
         case PLAN_DELETE:
-            url = `https://ytconcerts-server.herokuapp.com/api/users/${data.userId}/plans/${data.concertId}`;
+            url = `https://ytconcerts-server-82f8fe476e27.herokuapp.com/api/users/${data.userId}/plans/${data.concertId}`;
             break;
     }
 
